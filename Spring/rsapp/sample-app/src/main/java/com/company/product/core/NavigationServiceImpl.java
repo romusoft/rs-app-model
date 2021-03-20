@@ -1,4 +1,4 @@
-package com.sample;
+package com.company.product.core;
 
 import java.util.List;
 

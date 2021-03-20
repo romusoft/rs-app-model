@@ -1,4 +1,4 @@
-package com.sample.module.main.scheme.activity;
+package com.company.product.module.main.feature.activity;
 
 import java.util.ArrayList;
 import java.util.List;
