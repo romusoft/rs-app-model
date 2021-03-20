@@ -1,0 +1,50 @@
+/******** =========================== BEGIN WP-PDF-VIEWER DESIGN DESIGN ========================**********/
+.pdf-viewer-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.pdf-viewer-header {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 auto;
+          flex: 0 1 auto;
+  padding: 5px;
+  background-color: #F4F4F4;
+  /* The above is shorthand for:
+    flex-grow: 0, do not grow
+    flex-shrink: 0, do not shrink 
+    flex-basis: auto, width/height
+    */
+}
+
+.pdf-viewer-footer {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 auto;
+          flex: 0 1 auto;
+  padding: 3px;
+  background-color: #F4F4F4;
+  font: 400 10px Arial, Helvetica, sans-serif;
+  /* The above is shorthand for:
+    flex-grow: 0, do not grow
+    flex-shrink: 0, do not shrink 
+    flex-basis: auto, width/height
+    */
+}
+
+.pdf-viewer-content {
+  height: 100%;
+  width: 100%;
+  border: none;
+  border: 0px;
+  overflow-y: hidden;
+}
+
+/******** =========================== END WP-PDF-WIEWER DESIGN DESIGN ========================**********/
+/*# sourceMappingURL=rs-pdf-viewer.css.map */

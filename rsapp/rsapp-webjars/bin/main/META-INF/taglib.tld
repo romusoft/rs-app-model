@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/jsee/web-jsptagLibrary_2_0.xsd" version="2.0">
+
+	<description>RSAPP tag library</description>
+	<display-name>RSAPP tag library</display-name>
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>2.2</jsp-version>
+	<short-name>rsaptl</short-name>
+	<uri>http://romusoft.net/rsapp/tags</uri>
+
+	<tag-file>
+		<name>layout-default-original</name>
+		<path>/META-INF/tags/wp-layout-default-original.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>layout-default</name>
+		<path>/META-INF/tags/wp-layout-default.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>layout-navigation-left</name>
+		<path>/META-INF/tags/wp-layout-navigation-left.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>layout-navigation-tabs</name>
+		<path>/META-INF/tags/wp-layout-navigation-tabs.tag</path>
+	</tag-file>
+
+
+	<tag-file>
+		<name>layout-navigation-top-bootstrap</name>
+		<path>/META-INF/tags/wp-layout-navigation-top-bootstrap.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>layout-navigation-topleft-bootstrap</name>
+		<path>/META-INF/tags/wp-layout-navigation-topleft-bootstrap.tag</path>
+	</tag-file>
+
+
+	<tag-file>
+		<name>layout-navigation-top</name>
+		<path>/META-INF/tags/wp-layout-navigation-top.tag</path>
+	</tag-file>
+
+
+	<tag-file>
+		<name>layout-navigation-topbottom</name>
+		<path>/META-INF/tags/wp-layout-navigation-topbottom.tag</path>
+	</tag-file>
+
+	<tag-file>
+		<name>layout-navigation-topleft</name>
+		<path>/META-INF/tags/wp-layout-navigation-topleft.tag</path>
+	</tag-file>
+
+</taglib>

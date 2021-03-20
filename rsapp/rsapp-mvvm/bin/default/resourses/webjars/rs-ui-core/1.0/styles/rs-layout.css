@@ -1,0 +1,178 @@
+/******** =========================== BEGIN LAYOUT DESIGN ========================**********/
+.wp-layout-main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  height: 100%;
+}
+
+.wp-layout-main .wp-main-header {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 auto;
+          flex: 0 1 auto;
+  position: relative;
+  /* The above is shorthand for:
+    flex-grow: 0, do not grow
+    flex-shrink: 0, do not shrink 
+    flex-basis: auto, width/height
+    */
+  z-index: 10000;
+  background-color: #F4F4F4;
+}
+
+.wp-layout-main .wp-main-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  overflow-y: auto;
+  height: 0;
+  /* the height of this class must be set to 0 for iframe to use 100% of the height of its container*/
+}
+
+/********************* side strip design to toggle side navigation *******************/
+.wp-main-content .wp-sidestrip {
+  height: 100%;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 40px;
+          flex: 0 0 40px;
+  left: 0;
+  border: none;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  padding: 0;
+  background-color: #E4E4E4;
+  cursor: pointer;
+  font: 400 12px Arial, Helvetica, sans-serif;
+}
+
+.wp-main-content .wp-sidestrip .caption {
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #78a22f;
+  white-space: nowrap;
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
+  width: 120px;
+  height: 120px;
+  margin-left: 5px;
+}
+
+.wp-main-content .wp-sidestrip:hover {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#cbd7e2), to(white));
+  background-image: linear-gradient(to bottom, #cbd7e2, white);
+}
+
+/**************** side navigation design ******************/
+.wp-main-content .wp-sidenavigation {
+  height: 100%;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 17.2em;
+          flex: 0 0 17.2em;
+  border-right: 1px solid #E4E4E4;
+  white-space: nowrap;
+  overflow-y: auto;
+  background: #F4F4F4;
+  padding: 0 10px 0 10px;
+  font: 400 12px Arial, Helvetica, sans-serif;
+  -webkit-transition: -webkit-flex-basis 500ms ease-in-out;
+  transition: -webkit-flex-basis 500ms ease-in-out;
+  transition: flex-basis 500ms ease-in-out;
+  transition: flex-basis 500ms ease-in-out, -webkit-flex-basis 500ms ease-in-out, -ms-flex-preferred-size 500ms ease-in-out;
+}
+
+.wp-main-content .wp-sidenavigation ul {
+  list-style: none;
+  margin: 0;
+  padding: 10px 0px;
+}
+
+.wp-main-content .wp-sidenavigation li {
+  margin-bottom: 5px;
+}
+
+.wp-main-content .wp-sidenavigation ul li a {
+  display: block;
+  color: #333;
+  padding: 4px 8px;
+  line-height: 1.2;
+  font-family: inherit;
+  text-align: left;
+  text-decoration: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.wp-main-content .wp-sidenavigation ul li.active a {
+  border: none;
+  color: #00447c;
+  /* --wp-brand-accent: #00447c;*/
+  font-weight: 600;
+  text-transform: uppercase;
+  -webkit-text-transform: capitalize;
+}
+
+.wp-main-content .wp-sidenavigation ul li.active a::after {
+  content: ">";
+  color: #78a22f;
+  /* --wp-hover-bg-color:#78a22f; */
+  font-family: Fira Mono, DejaVu Sans Mono, Menlo, Consolas, Liberation Mono, Monaco, Lucida Console, monospace;
+  font-size: 16px;
+  margin-left: 3px;
+  font-weight: bold;
+}
+
+.wp-main-content .wp-sidenavigation ul li a:hover {
+  padding: 4px 8px;
+  border: none;
+  background: #78a22f;
+  /* --wp-hover-bg-color:#78a22f; */
+  color: #ffffff;
+  /* --wp-hover-text-color:#ffffff; */
+}
+
+.wp-main-content .wp-sidenavigation.wp-toggle-display {
+  -ms-flex-preferred-size: 0;
+      flex-basis: 0;
+  display: none;
+}
+
+.wp-main-content .wp-sidenavigation .wp-active-tab-name {
+  font-size: 17px;
+  font-weight: normal;
+  vertical-align: text-bottom;
+  margin-left: -10;
+  border: none;
+}
+
+/****************** page content *******************/
+.wp-main-content .wp-content {
+  position: relative;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  overflow-y: auto;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/******** =========================== END LAYOUT DESIGN ========================**********/
+/*# sourceMappingURL=rs-layout.css.map */

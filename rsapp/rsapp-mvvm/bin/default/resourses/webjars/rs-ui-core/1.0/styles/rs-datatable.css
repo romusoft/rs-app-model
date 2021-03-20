@@ -1,0 +1,52 @@
+/******** =========================== BEGIN WP-DATATABLE DESIGN DESIGN ========================**********/
+.wp-datatable.datatable {
+  font: 400 11px Arial, Helvetica, sans-serif;
+}
+
+.wp-datatable.datatable td, .wp-datatable.datatable th {
+  white-space: nowrap;
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.wp-datatable.datatable thead th, .wp-datatable.datatable thead td {
+  white-space: nowrap;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.wp-datatable.dataTable thead th {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  padding-left: 2px !important;
+  padding-right: 16px !important;
+}
+
+.wp-datatable.dataTable tbody td {
+  text-align: left;
+  padding: 5px 5px;
+}
+
+.wp-datatable.dataTable thead tr {
+  background-color: #e4f0fb;
+}
+
+.wp-datatable.datatable thead .sorting_asc {
+  background-image: url(images/sort_asc_green.png);
+}
+
+.wp-datatable.datatable thead .sorting_desc {
+  background-image: url(images/sort_desc_green.png);
+}
+
+.wp-datatable tr td.total {
+  background-color: #e4f0fb;
+  text-align: right;
+}
+
+.wp-datatable.highlight-total td:nth-last-child(1) {
+  background-color: #e4f0fb;
+}
+
+/******** =========================== END WP-DATATABLE DESIGN ========================**********/
+/*# sourceMappingURL=rs-datatable.css.map */

@@ -1,0 +1,52 @@
+/******** =========================== BEGIN WP-PANEL DESIGN ========================**********/
+.wp-panel {
+	display: flex;
+	padding: 3px;
+}
+
+.wp-panel .wp-content-left {		
+	flex: 1;
+	display: flex;
+	align-items: flex-start;
+	padding: 3px;
+}
+.wp-panel .wp-content-right {	
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+    flex: 1 1 0%;
+    padding: 3px;
+}
+.wp-panel .wp-content-center {	
+	flex:1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 3px;
+}
+
+
+.wp-panel .wp-content-left.wp-rows {	
+	flex-direction: column;
+}
+.wp-panel .wp-content-right.wp-rows {	
+	flex-direction: row; 
+}
+.wp-panel .wp-content-center.wp-rows {	
+	flex-direction: column;
+}
+
+.wp-panel .wp-content-left > div {	
+	
+	padding: 3px 3px 3px 3px;
+}
+.wp-panel .wp-content-right > div {	
+
+	padding: 3px 3px 3px 3px;
+}
+.wp-panel .wp-content-center > div {	
+	
+	padding: 3px 3px 3px 3px;
+}
+
+/******** =========================== END WP-PANEL DESIGN ========================**********/

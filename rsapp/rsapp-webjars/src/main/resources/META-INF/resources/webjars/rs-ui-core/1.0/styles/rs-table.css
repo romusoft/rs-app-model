@@ -1,0 +1,35 @@
+/******** =========================== BEGIN WP-TABLE DESIGN ========================**********/
+.wp-table {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  font: 400 11px Arial, Helvetica, sans-serif;
+}
+
+.wp-table th {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  text-align: right;
+  padding: 7px 8px;
+}
+
+.wp-table tr th {
+  background-color: #e4f0fb;
+}
+
+.wp-table td {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  text-align: right;
+  padding: 3px 8px;
+}
+
+.wp-table tr td.total {
+  background-color: #e4f0fb;
+}
+
+.wp-table.highlight-total td:nth-child(n+5):nth-last-child(1) {
+  background-color: #e4f0fb;
+}
+
+/******** =========================== END WP-TABLE DESIGN ========================**********/
+/*# sourceMappingURL=rs-table.css.map */

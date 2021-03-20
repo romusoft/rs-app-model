@@ -1,0 +1,29 @@
+plugins {
+   id "org.springframework.boot" version "2.4.1"
+	id 'java'
+}
+
+repositories {
+	mavenCentral()
+}
+
+bootJar {
+	enabled = false
+}
+
+jar {
+	enabled = true
+}
+configurations {
+    providedRuntime
+}
+dependencies {
+
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper'	
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
+	implementation 'javax.servlet:jstl'
+	implementation 'org.webjars:datatables:1.10.21'
+	
+}

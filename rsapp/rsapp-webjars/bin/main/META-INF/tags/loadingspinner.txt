@@ -1,0 +1,34 @@
+* Usage of loading spinners
+*
+* Add this to the page content
+* credit: A PEN BY Lokesh Suthar
+* https://codepen.io/collection/HtAne/6/
+**
+
+<div class="modal-cs-loader">
+  <div class="modal-cs-loader-inner">
+    <label class="wp-brand-info">loading..</label>
+    <label>.<label>
+    <label>.<label>
+    <label>.<label>
+    <label>.<label>
+    <label>.<label>
+  </div>
+  
+  
+* Usage of loading spinners
+*
+* Add this to the page content
+* credit: A PEN BY Lokesh Suthar
+* https://codepen.io/collection/HtAne/6/
+**
+ <div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+<p>~</p>
+<p>~</p>
+<p>Loading</p>

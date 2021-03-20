@@ -1,0 +1,158 @@
+/******** =========================== BEGIN TAB-NAVIGATION DESIGN ========================**********/
+
+.tab-navigation {
+	padding: 0px;
+	margin: 2px 0px 0px 0px;
+}
+
+/******************************* outer tabs***************************************/
+.outer-tab .nav-tabs {
+	white-space: nowrap;
+	background: #f8f9f9;
+}
+
+.outer-tab .nav-tabs li {
+	text-align: center;
+	vertical-align: middle;
+	border: var(- -wp-base-bg-color);
+	margin-right: 1px;
+	line-height: 20px;
+	border: none;
+	background-color: #cbd7e2; /* --wp-outertab-btn-color:#cbd7e2; */
+	background-image: linear-gradient(to bottom, #cbd7e2, white);
+	/* --wp-outertab-btn-color:#cbd7e2; */
+}
+
+.outer-tab .nav-tabs li.active {
+	font-weight: bold;
+	border-left: 1px solid #c0bdb3;
+	border-right: 1px solid #c0bdb3;
+	border-top: 1px solid #c0bdb3;
+	-moz-border-radius-topleft: 7px;
+	-moz-border-radius-topright: 7px;
+	background-color: var(- -wp-base-bg-color);
+	background-image: linear-gradient(#e4f0fb, #f8f9f9);
+	/* --wp-base-bg-color:#e4f0fb; */
+	text-align: center;
+	vertical-align: middle;
+	margin-left: -2px;
+	margin-right: 0;
+}
+
+.outer-tab .nav-tabs .dropdown-menu li {
+	text-align: justify;
+	vertical-align: text-top;
+	border-color: #c0bdb3;
+	background: #f8f9f9;
+	margin-right: 2px;
+}
+
+.outer-tab .nav-tabs .dropdown-menu li a.active {
+	color: white;
+	background-color: red;
+}
+
+.outer-tab .nav-tabs li a:hover {
+	color: #78a22f; /* --wp-hover-bg-color:#78a22f; */
+}
+
+.outer-tab .nav-tabs .dropdown-menu li.a:hover {
+	color: red;
+}
+
+/************************************* inner tabs design *************************/
+.inner-tab .nav-tabs {
+	border: none;
+	background-color: #f8f9f9;
+	padding: 2px 2px;
+}
+
+.inner-tab .nav-tabs li a {
+	font: small Arial, Helvetica, sans-serif;
+	padding: 4px 8px;
+	margin-top: 5px;
+	margin-bottom: 3px;
+	margin-right: 2px;
+	margin-left: 0px;
+	background: #e4f0fb; /* --wp-base-bg-color:#e4f0fb; */
+	color: #053964; /* --wp-base-text-color:#053964; */
+	border: 1px solid #e4f0fb; /* --wp-base-bg-color:#e4f0fb; */
+	line-height: 1.42857;
+	font-family: inherit;
+	text-align: center;
+	text-decoration: none;
+	white-space: nowrap;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
+	user-select: none;
+	cursor: pointer;
+	outline: none;
+	-webkit-appearance: none;
+	position: relative;
+}
+
+.inner-tab .nav-tabs li.active a {
+	border: none;
+	background-color: #00447c; /* --wp-brand-accent:#00447c; */
+	color: white;
+}
+
+.inner-tab .nav-tabs li a:hover {
+	border: none;
+	background: #78a22f; /* --wp-hover-bg-color:#78a22f; */
+	color: #ffffff; /* --wp-hover-text-color:#ffffff; */
+}
+
+.inner-tab .nav-tabs li a:hover:before, .inner-tab .nav-tabs li.active a:before
+	{
+	left: 0;
+}
+
+.inner-tab .nav-tabs li a:hover:after, .inner-tab .nav-tabs li.active a:after
+	{
+	right: 0;
+}
+
+
+/******************************************** navigation item separator design ****************************/
+
+li.wp-separator  {
+    margin-bottom: 0px;
+    pointer-events:none;   
+}
+li.wp-separator.wp-display-none {
+    display:none;  
+}
+ul li.wp-separator a {
+
+   color: red;
+   margin: -10px 10px;
+   text-align: left;
+   text-decoration: none;
+   white-space: nowrap;
+   user-select: none;
+   cursor: normal;
+   outline: none;
+   -webkit-appearance: none;
+}
+
+ul li.wp-separator.active a {
+   border: none;
+   color: #00447c; /* --wp-brand-accent: #00447c;*/
+   font-weight: 400;
+   font-size:12px;
+   
+}
+
+ul li.wp-separator .active a::after {
+  content: "";
+}
+
+ul li.wp-separator  a:hover {
+   padding: 4px 8px;
+   border: none;
+   background: red; /* --wp-hover-bg-color:#78a22f; */
+   color: #ffffff; /* --wp-hover-text-color:#ffffff; */
+}
+/******** =========================== END TAB-NAVIGATION DESIGN ========================**********/

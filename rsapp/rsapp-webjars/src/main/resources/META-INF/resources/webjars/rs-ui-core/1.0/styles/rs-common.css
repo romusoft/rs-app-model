@@ -1,0 +1,125 @@
+/******** =========================== BEGIN BASIC PAGE CONFIGURATION DESIGN ========================**********/
+a:hover,
+a:focus {
+  outline: none;
+  text-decoration: none;
+}
+
+html,
+body {
+  height: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.bodyTitle {
+  font-size: 1.5em;
+  line-height: 40px;
+  text-align: center;
+  font-weight: 500;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  margin: 0px;
+  padding: 0px;
+}
+
+.wp-page-title {
+  font-size: 2em;
+  line-height: 60px;
+  text-align: center;
+  font-weight: 500;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  margin: 0px;
+  padding: 5px;
+}
+
+.wp-body-title {
+  font-size: 1.2em;
+  line-height: 40px;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+/******** =========================== END BASIC PAGE CONFIGURATION DESIGN ========================**********/
+/******** =========================== BEGIN THEME COLORS DESIGN ========================**********/
+.wp-brand-accent {
+  color: #00447c;
+}
+
+.wp-brand-info {
+  color: #004c8c;
+}
+
+.wp-brand-success {
+  color: #78a22f;
+}
+
+.wp-brand-error {
+  color: #d51923;
+}
+
+.wp-brand-warning {
+  color: #fdce3e;
+}
+
+.wp-page-text-color {
+  color: #000000;
+}
+
+.wp-page-bg-color {
+  color: #ffffff;
+}
+
+.wp-base-text-color {
+  color: #053964;
+}
+
+.wp-base-bg-color {
+  color: #e4f0fb;
+}
+
+.wp-hover-text-color {
+  color: #ffffff;
+}
+
+.wp-hover-bg-color {
+  color: #78a22f;
+}
+
+.wp-selected-text-color {
+  color: #f3f9fe;
+}
+
+.wp-selected-bg-color {
+  color: #053964;
+}
+
+.wp-tab-bg-color {
+  color: #f8f9f9;
+}
+
+.wp-outertab-btn-color {
+  color: #cbd7e2;
+}
+
+.wp-innertab-btn-color {
+  color: #cbd7e2;
+}
+
+.wp-main-header-bg-color {
+  color: #F4F4F4;
+}
+
+.wp-side-strip-bg-color {
+  color: #E4E4E4;
+}
+
+.wp-side-navigation-bg-color {
+  color: #F4F4F4;
+}
+
+/******** =========================== END THEME COLORS DESIGN ========================**********/
+/*# sourceMappingURL=rs-common.css.map */

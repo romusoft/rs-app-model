@@ -1,0 +1,100 @@
+/******** =========================== BEGIN BASIC PAGE CONFIGURATION DESIGN ========================**********/
+a:hover,
+a:focus {
+  outline: none;
+  text-decoration: none;
+}
+
+html,
+body {
+  height: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+
+.bodyTitle {
+  font-size: 1.5em;
+  line-height: 40px;
+  text-align: center;
+  font-weight: 500;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  margin: 0px;
+  padding: 0px;
+}
+
+.wp-page-title {
+  font-size: 2em;
+  line-height: 60px;
+  text-align: center;
+  font-weight: 500;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  margin: 0px;
+  padding: 5px;
+}
+
+.wp-body-title {
+  font-size: 1.2em;
+  line-height: 40px;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+/******** =========================== END BASIC PAGE CONFIGURATION DESIGN ========================**********/
+
+
+/******** =========================== BEGIN THEME COLORS DESIGN ========================**********/
+$colors: (
+  wp-brand-accent: #00447c,
+  wp-brand-info: #004c8c,
+  wp-brand-success: #78a22f,
+  wp-brand-error: #d51923,
+  wp-brand-warning: #fdce3e,
+  wp-page-text-color: #000000,
+  wp-page-bg-color: #ffffff,
+  wp-base-text-color: #053964,
+  wp-base-bg-color: #e4f0fb,
+  wp-hover-text-color: #ffffff,
+  wp-hover-bg-color: #78a22f,
+  wp-selected-text-color: #f3f9fe,
+  wp-selected-bg-color: #053964,
+  wp-tab-bg-color: #f8f9f9,
+  wp-outertab-btn-color: #cbd7e2,
+  wp-innertab-btn-color: #cbd7e2,
+  
+  wp-main-header-bg-color:#F4F4F4,
+  wp-side-strip-bg-color: #E4E4E4,
+  wp-side-navigation-bg-color: #F4F4F4
+);
+
+@function color($color-name) {
+  @return map-get($colors, $color-name);
+}
+
+.wp-brand-accent{ color: color(wp-brand-accent);}
+.wp-brand-info{ color:color(wp-brand-info);}
+.wp-brand-success{ color: color(wp-brand-success)}
+.wp-brand-error{ color: color(wp-brand-error);} 
+.wp-brand-warning{ color: color(wp-brand-warning);} 
+.wp-page-text-color{ color: color(wp-page-text-color);} 
+.wp-page-bg-color{ color: color(wp-page-bg-color);} 
+.wp-base-text-color{ color: color(wp-base-text-color);} 
+.wp-base-bg-color{ color: color(wp-base-bg-color);} 
+.wp-hover-text-color{ color: color(wp-hover-text-color);} 
+.wp-hover-bg-color{ color: color(wp-hover-bg-color);} 
+.wp-selected-text-color{ color: color(wp-selected-text-color);} 
+.wp-selected-bg-color{ color: color(wp-selected-bg-color);} 
+.wp-tab-bg-color{ color: color(wp-tab-bg-color);}
+.wp-outertab-btn-color{ color: color(wp-outertab-btn-color);}
+.wp-innertab-btn-color{ color: color(wp-innertab-btn-color);}
+
+.wp-main-header-bg-color{ color: color(wp-main-header-bg-color);}
+.wp-side-strip-bg-color{ color: color(wp-side-strip-bg-color);}
+.wp-side-navigation-bg-color{ color: color(wp-side-navigation-bg-color);}
+/******** =========================== END THEME COLORS DESIGN ========================**********/
+
+
+

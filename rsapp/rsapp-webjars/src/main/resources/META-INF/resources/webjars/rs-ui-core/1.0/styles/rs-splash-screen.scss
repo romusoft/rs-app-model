@@ -1,0 +1,298 @@
+/******** =========================== BEGIN SPLASH SCREEN DESIGN ========================**********/
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.modal {
+    display:    none;
+    position:   absolute;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    width:100%;
+    height:100%;
+    
+	
+    background: rgba( 255,255,255, .8 ) 
+                url('../../../images/Preloader_11.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+.wp-content.loading .modal {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+.wp-content.loading .modal {
+    display: block;
+}
+
+/************************************* end modal loading ************************************/
+
+
+
+/************************************* modal-cs-loader loading ***********************************
+* credit: A PEN BY Lokesh Suthar
+* https://codepen.io/collection/HtAne/6/
+*/
+.modal-cs-loader {
+    display:    none;
+    position:   absolute;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    width:100%;
+    height:100%;
+    background: rgba( 255,255,255, .8 );
+}
+
+.modal-cs-loader-inner {
+  transform: translateY(-50%);
+  top: 50%;
+  position: absolute;
+  width: calc(100% - 200px);
+  color: #FFF;
+  padding: 0 100px;
+  text-align: center;
+}
+
+.modal-cs-loader-inner label {
+  font-size: 20px;
+  opacity: 0;
+  display:inline-block;
+  color:#78a22f;
+}
+
+@keyframes lol {
+  0% {
+    opacity: 0;
+    transform: translateX(-300px);
+  }
+  33% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  66% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(300px);
+  }
+}
+
+@-webkit-keyframes lol {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-300px);
+  }
+  33% {
+    opacity: 1;
+    -webkit-transform: translateX(0px);
+  }
+  66% {
+    opacity: 1;
+    -webkit-transform: translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(300px);
+  }
+}
+
+.modal-cs-loader-inner label:nth-child(6) {
+  -webkit-animation: lol 3s infinite ease-in-out;
+  animation: lol 3s infinite ease-in-out;
+}
+
+.modal-cs-loader-inner label:nth-child(5) {
+  -webkit-animation: lol 3s 100ms infinite ease-in-out;
+  animation: lol 3s 100ms infinite ease-in-out;
+}
+
+.modal-cs-loader-inner label:nth-child(4) {
+  -webkit-animation: lol 3s 200ms infinite ease-in-out;
+  animation: lol 3s 200ms infinite ease-in-out;
+}
+
+.modal-cs-loader-inner label:nth-child(3) {
+  -webkit-animation: lol 3s 300ms infinite ease-in-out;
+  animation: lol 3s 300ms infinite ease-in-out;
+}
+
+.modal-cs-loader-inner label:nth-child(2) {
+  -webkit-animation: lol 3s 400ms infinite ease-in-out;
+  animation: lol 3s 400ms infinite ease-in-out;
+}
+
+.modal-cs-loader-inner label:nth-child(1) {
+  -webkit-animation: lol 3s 500ms infinite ease-in-out;
+  animation: lol 3s 500ms infinite ease-in-out;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+.wp-content.loading .modal-cs-loader {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+.wp-content.loading .modal-cs-loader {
+    display: block;
+}
+/************************************* modal-cs-loader loading ***********************************
+
+
+
+/******************************* modal-wave styles ***************************************/
+
+.modal-wave-loader{
+	
+	display:    none;
+    position:   absolute;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    width:100%;
+    height:100%;
+    background: rgba( 255,255,255, .8 );
+}
+
+p.wave {
+position: absolute;
+left: 50%;
+top: 50%;
+width: 110px;
+margin: 40px 0 0 -55px;
+color: rgba(120,162,47,0.15);
+font-family: "Arial", "Segoe UI", sans-serif;
+font-size: 2.2em;
+text-align: center;
+}
+
+
+
+p.wave:nth-of-type(1) {
+font-size: 3.6em;
+margin-top: -10px;
+}
+
+p.wave:nth-of-type(2) {
+font-size: 3.6em;
+margin-top: 0px;
+}
+
+.modal-circle {
+position: absolute;
+left: 50%;
+top: 50%;
+width: 10px;
+height: 10px; 
+border-radius: 50%;
+border: 1px solid #e6e6e6;
+box-shadow: 0px 1px 3px #78A22F;
+-moz-animation-name: jump;
+-moz-animation-duration: 1s;
+-moz-animation-iteration-count: infinite;
+
+-webkit-animation-name: jump;
+-webkit-animation-duration: 1s;
+-webkit-animation-iteration-count: infinite;
+
+animation-name: jump;
+animation-duration: 1s;
+animation-iteration-count: infinite;
+}
+
+.modal-circle:nth-of-type(1) {
+margin: -20px 0 0 -65px;
+-moz-animation-delay: 0.1s;
+-webkit-animation-delay: 0.1s;
+animation-delay: 0.1s;
+}
+
+.modal-circle:nth-of-type(2) {
+margin: -20px 0 0 -45px;
+-moz-animation-delay: 0.2s;
+-webkit-animation-delay: 0.2s;
+animation-delay: 0.2s;
+}
+
+.modal-circle:nth-of-type(3) {
+margin: -20px 0 0 -25px;
+-moz-animation-delay: 0.3s;
+-webkit-animation-delay: 0.3s;
+animation-delay: 0.3s;
+}
+
+.modal-circle:nth-of-type(4) {
+margin: -20px 0 0 -5px;
+-moz-animation-delay: 0.4s;
+-webkit-animation-delay: 0.4s;
+animation-delay: 0.4s;
+}
+
+.modal-circle:nth-of-type(5) {
+margin: -20px 0 0 15px;
+-moz-animation-delay: 0.5s;
+-webkit-animation-delay: 0.5s;
+animation-delay: 0.5s;
+}
+
+.modal-circle:nth-of-type(6) {
+margin: -20px 0 0 35px;
+-moz-animation-delay: 0.6s;
+-webkit-animation-delay: 0.6s;
+animation-delay: 0.6s;
+}
+
+.modal-circle:nth-of-type(7) {
+margin: -20px 0 0 55px;
+-moz-animation-delay: 0.7s;
+-webkit-animation-delay: 0.7s;
+animation-delay: 0.7s;
+}
+
+
+
+@-webkit-keyframes jump {
+0% {border: 1px solid #bfbfbf;}
+50% {-webkit-transform:translateY(-30px);}
+75% {border: 1px solid #fff; box-shadow: 0px 6px 3px #9f9f9f;}
+100% {border: 1px solid #bfbfbf;}
+}
+
+@-moz-keyframes jump {
+0% {border: 1px solid #bfbfbf;}
+50% {-moz-transform:translateY(-30px);}
+75% {border: 1px solid #fff; box-shadow: 0px 6px 3px #9f9f9f;}
+100% {border: 1px solid #bfbfbf;}
+}
+@keyframes jump {
+0% {border: 1px solid #bfbfbf;}
+50% {transform:translateY(-30px);}
+75% {border: 1px solid #fff; box-shadow: 0px 6px 3px #9f9f9f;}
+100% {border: 1px solid #bfbfbf;}
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+.wp-content.loading .modal-wave-loader {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+.wp-content.loading .modal-wave-loader {
+    display: block;
+}
+/******************************* end of modal-wave styles ***************************************/
+
+/******** =========================== END MODAL SPLASH SCREEN DESIGN ========================**********/

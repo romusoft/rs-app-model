@@ -1,0 +1,30 @@
+plugins {
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+}
+
+
+allprojects {
+
+dependencyManagement {
+  imports {
+          mavenBom("org.springframework.boot:spring-boot-dependencies:2.3.1.RELEASE")
+  }
+}
+
+subprojects {
+
+	group = 'com.rsapp'
+	version = '1.0'
+
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java-library'
+    
+	repositories {
+        mavenCentral()
+    }    
+ }
+ 
+ 
+}

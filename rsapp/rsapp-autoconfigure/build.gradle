@@ -1,0 +1,28 @@
+plugins {
+    id "org.springframework.boot" version "2.4.1"
+}
+
+
+repositories {
+	mavenCentral()
+}
+bootJar {
+	enabled = false
+}
+
+jar {
+	enabled = true
+}
+
+dependencies {
+
+	implementation project(":rsapp-mvvm")
+	implementation 'org.springframework.boot:spring-boot-starter'
+	//
+	// process for property intellisense at compile time only
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+

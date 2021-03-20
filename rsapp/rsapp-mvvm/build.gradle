@@ -1,0 +1,43 @@
+plugins {
+  id "org.springframework.boot" version "2.4.1"
+}
+
+
+repositories {
+	mavenCentral()
+}
+
+bootJar {
+	enabled = false
+}
+
+jar {
+	enabled = true
+}
+configurations {
+    providedRuntime
+}
+
+dependencies {
+
+	//providedRuntime 'javax.servlet:javax.servlet-api:4.0.0.0'
+	//implementation 'javax.servlet:jstl'
+    //implementation 'javax.servlet.jsp:jsp-api:2.1'
+	// tag:: UI
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'javax.validation:validation-api:2.0.0.Final' 
+	implementation 'org.webjars:webjars-locator:0.40'
+	
+	// end tag:: UI
+	
+	// tag:: security	
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'com.azure.spring:azure-spring-boot-starter-active-directory-b2c:3.2.0'
+	// end tag: security
+	
+	// tag:: data
+	implementation 'commons-io:commons-io:2.6'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'	
+	// end tag:: data
+
+}
