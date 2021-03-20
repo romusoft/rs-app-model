@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.rsapp.autoconfigure.configuration.RsAppAutoConfiguration
+com.romusoft.rsapp.autoconfigure.configuration.RsAppAutoConfiguration

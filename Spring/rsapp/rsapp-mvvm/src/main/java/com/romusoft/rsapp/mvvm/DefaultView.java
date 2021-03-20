@@ -1,8 +1,6 @@
-package com.sample.module.main.scheme.activity;
+package com.romusoft.rsapp.mvvm;
 
-import com.romusoft.rsapp.mvvm.RsAbstractView;
-
-public class VActivityList extends RsAbstractView {
+public class DefaultView extends RsAbstractView {
 
 	String htmlTitle = "Hello World fsfsdf";
 

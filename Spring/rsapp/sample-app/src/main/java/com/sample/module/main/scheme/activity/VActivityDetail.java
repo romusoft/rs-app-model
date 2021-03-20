@@ -1,6 +1,6 @@
 package com.sample.module.main.scheme.activity;
 
-import com.rsapp.mvvm.RsAbstractView;
+import com.romusoft.rsapp.mvvm.RsAbstractView;
 
 public class VActivityDetail extends RsAbstractView {
 	String htmlTitle = "Detail Screen";
