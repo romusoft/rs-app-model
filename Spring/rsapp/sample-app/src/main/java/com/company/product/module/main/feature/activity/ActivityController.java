@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.romusoft.rsapp.mvvm.DefaultViewModel;
+import net.romusoft.rsapp.mvvm.DefaultViewModel;
 
 @Controller
 public class ActivityController {

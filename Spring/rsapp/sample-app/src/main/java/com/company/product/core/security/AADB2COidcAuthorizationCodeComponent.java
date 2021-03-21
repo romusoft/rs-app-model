@@ -14,8 +14,8 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.romusoft.rsapp.mvvm.io.DTORepositoryUtil;
-import com.romusoft.rsapp.mvvm.model.RsTokenInfo;
+import net.romusoft.rsapp.mvvm.io.DTORepositoryUtil;
+import net.romusoft.rsapp.mvvm.model.RsTokenInfo;
 
 /**
  * security configuration for azure AD B2C

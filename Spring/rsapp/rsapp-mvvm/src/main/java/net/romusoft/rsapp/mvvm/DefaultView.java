@@ -1,13 +1,12 @@
-package com.company.product.module.main.feature.activity;
+package net.romusoft.rsapp.mvvm;
 
-import net.romusoft.rsapp.mvvm.RsAbstractView;
+public class DefaultView extends RsAbstractView {
 
-public class VActivityDetail extends RsAbstractView {
-	String htmlTitle = "Detail Screen";
+	String htmlTitle = "Hello World fsfsdf";
 
 	@Override
 	public String getHtml() {
-		return "mod-main/scheme-activity/view-activity-detail/test";
+		return "mod-main/scheme-activity/view-activity-list/test";
 	}
 
 	@Override
@@ -76,4 +75,5 @@ public class VActivityDetail extends RsAbstractView {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

@@ -1,14 +1,20 @@
-package com.company.product.module.main.feature.activity;
+package net.romusoft.rsapp.mvvm;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.ui.Model;
 
-import net.romusoft.rsapp.mvvm.IRsView;
-import net.romusoft.rsapp.mvvm.RsAbstractViewModel2;
-
-public class ActivityViewModel extends RsAbstractViewModel2<VActivityList> {
+/**
+ * A generic default viewmodel with a default view. The default view can be
+ * overwritten in two ways: use the construct that take clazz that implements
+ * IRsView or call generateViewInstance after the default viewmodel is
+ * initialized
+ * 
+ * @author eromu_000
+ *
+ */
+public class DefaultViewModel extends RsAbstractViewModel2<DefaultView> {
 
 	private List<String> data = new ArrayList<String>();
 
@@ -16,14 +22,14 @@ public class ActivityViewModel extends RsAbstractViewModel2<VActivityList> {
 	 * empty constructor. Use for API data that does not require a view or spring
 	 * model
 	 */
-	public ActivityViewModel() {
+	public DefaultViewModel() {
 	}
 
 	/**
 	 * 
 	 * @param model
 	 */
-	public ActivityViewModel(Model model) {
+	public DefaultViewModel(Model model) {
 		super(model);
 	}
 
@@ -33,7 +39,7 @@ public class ActivityViewModel extends RsAbstractViewModel2<VActivityList> {
 	 * @param model
 	 * @param clazz
 	 */
-	public <TView extends IRsView> ActivityViewModel(Model model, Class<TView> clazz) {
+	public <TView extends IRsView> DefaultViewModel(Model model, Class<TView> clazz) {
 		super(model, clazz);
 	}
 

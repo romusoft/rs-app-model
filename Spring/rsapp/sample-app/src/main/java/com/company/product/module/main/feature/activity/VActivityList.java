@@ -1,6 +1,6 @@
 package com.company.product.module.main.feature.activity;
 
-import com.romusoft.rsapp.mvvm.RsAbstractView;
+import net.romusoft.rsapp.mvvm.RsAbstractView;
 
 public class VActivityList extends RsAbstractView {
 
