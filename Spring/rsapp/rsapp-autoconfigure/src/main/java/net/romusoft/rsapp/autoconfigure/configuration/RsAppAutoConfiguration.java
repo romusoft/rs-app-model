@@ -17,7 +17,7 @@ import net.romusoft.rsapp.mvvm.model.RsAssemblyInfo;
 /**
  * Configure beans based on resource properties {RsCdnJsProperties,
  * RsCdnCssProperties} for class RsCdnViewModel
- * 
+ *
  * @author eromu_000
  *
  */
