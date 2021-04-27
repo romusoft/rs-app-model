@@ -1,0 +1,53 @@
+plugins {
+	id "org.springframework.boot" version "2.4.5"
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+repositories {
+    mavenLocal()
+	mavenCentral()	
+}
+
+group = 'com.sample'
+version = '1.0'
+sourceCompatibility = '11'
+
+repositories {
+	flatDir {
+        dirs 'libs'
+    }
+    mavenLocal()
+	mavenCentral()
+	
+}
+
+configurations {
+    providedRuntime
+}
+dependencies {
+	// use repositories in the lib folder
+ 	compile fileTree(dir: 'libs', include: '*.jar')
+ 	
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	//providedRuntime 'org.apache.tomcat.embed:tomcat-embed-websocket'
+	providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper'	
+	//providedRuntime 'javax.servlet:javax.servlet-api:4.0.0.0'
+	
+	providedRuntime 'com.h2database:h2'
+	
+	implementation 'net.romusoft:rsapp-spring-boot-starter:1.0'
+	
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	
+	    
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}

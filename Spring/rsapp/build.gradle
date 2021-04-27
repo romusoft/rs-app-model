@@ -6,25 +6,68 @@ plugins {
 
 allprojects {
 
-dependencyManagement {
-  imports {
+	dependencyManagement {
+  		imports {
           mavenBom("org.springframework.boot:spring-boot-dependencies:2.3.1.RELEASE")
-  }
-}
+  		}
+	}
 
-subprojects {
+	subprojects {
 
-	group = 'net.romusoft.rsapp'
-	version = '1.0'
+		group = 'net.romusoft'
+		version = '1.0'
 
-    apply plugin: 'java'
-    apply plugin: 'io.spring.dependency-management'
-    apply plugin: 'java-library'
+    	apply plugin: 'java'
+    	apply plugin: 'io.spring.dependency-management'
+    	apply plugin: 'java-library'
+    	apply plugin: 'maven-publish'
+    	
+    	//
+    	// dependencies repo
+		repositories {
+        	mavenCentral()
+    	} 
     
-	repositories {
-        mavenCentral()
-    }    
- }
+    	configurations {
+    		providedRuntime
+		}
+    
+    	dependencies {
+			implementation 'org.springframework.boot:spring-boot-starter'
+			testImplementation('org.springframework.boot:spring-boot-starter-test') {
+				exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+			}
+		}
+
+		test {
+			useJUnitPlatform()
+		}
+    
+    
+    	//task sourceJar(type: Jar) {
+  		//	archiveClassifier = "sources"
+		//}
+		java {
+    		//withJavadocJar()
+    		withSourcesJar()
+		}
+    	// publishing
+    	publishing {
+    		publications {
+        		myLibrary(MavenPublication) {
+            		from components.java
+            		//artifact sourceJar // Publish the output of the sourceJar task
+        		}
+    		}
+    
+    	}
+    	
+  //  	javadoc {
+  //  		if(JavaVersion.current().isJava9Compatible()) {
+  //      		options.addBooleanOption('html5', true)
+  // 		}
+	//	}   
+ 	} // end of subprojects
  
  
-}
+} // end of allprojects

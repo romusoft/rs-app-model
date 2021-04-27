@@ -1,26 +1,5 @@
-plugins {
-  id "org.springframework.boot" version "2.4.1"
-	id 'java'
-}
-
-repositories {
-	mavenCentral()
-}
-
-bootJar {
-	enabled = false
-}
-
-jar {
-	enabled = true
-}
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation project(":rsapp-autoconfigure")
 	implementation project(":rsapp-mvvm")
 	implementation project(":rsapp-webjars")
-}
-
-test {
-	useJUnitPlatform()
 }

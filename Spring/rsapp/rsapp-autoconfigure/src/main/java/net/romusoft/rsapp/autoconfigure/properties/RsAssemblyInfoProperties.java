@@ -9,38 +9,38 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "rsapp.assemblyinfo")
 public class RsAssemblyInfoProperties {
-	/*
+	/**
 	 * deployment environment name of the app: staging, dev, prod, etc.
 	 */
 	private String environment;
 
-	/*
+	/**
 	 * version deployed to the web server
 	 */
 	private String version;
 
-	/*
+	/**
 	 * friendly or display name of the application
 	 */
 	private String applicationTitle;
 
-	/*
+	/**
 	 * name of the application based on which the war file is created
 	 */
 	private String applicationName;
 
-	/*
+	/**
 	 * the directory where the appconfig.properties file is located. the
 	 * appconfig.properties file must be located there and accessible for the app to
 	 * run
 	 */
 	private String propertyFileDirectory;
-	/*
+	/**
 	 * the application file name deployed on the server
 	 */
 	private String applicationFilename;
 
-	/*
+	/**
 	 * the application file title deployed on the server. This name is used to stop
 	 * or un-deploy the app it is the name of the module seen on a weblogic server
 	 * after an app is deployed

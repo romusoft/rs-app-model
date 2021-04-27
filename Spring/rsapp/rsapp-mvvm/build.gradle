@@ -1,22 +1,4 @@
-plugins {
-  id "org.springframework.boot" version "2.4.1"
-}
 
-
-repositories {
-	mavenCentral()
-}
-
-bootJar {
-	enabled = false
-}
-
-jar {
-	enabled = true
-}
-configurations {
-    providedRuntime
-}
 
 dependencies {
 

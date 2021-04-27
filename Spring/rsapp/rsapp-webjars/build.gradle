@@ -1,24 +1,4 @@
-plugins {
-   id "org.springframework.boot" version "2.4.1"
-	id 'java'
-}
-
-repositories {
-	mavenCentral()
-}
-
-bootJar {
-	enabled = false
-}
-
-jar {
-	enabled = true
-}
-configurations {
-    providedRuntime
-}
 dependencies {
-
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper'	
 	implementation 'org.springframework.boot:spring-boot-starter-web'

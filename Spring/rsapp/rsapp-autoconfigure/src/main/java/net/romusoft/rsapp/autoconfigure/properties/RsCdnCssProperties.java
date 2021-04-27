@@ -14,10 +14,23 @@ public class RsCdnCssProperties {
 	/*
 	 * Cdn for files
 	 */
-	private String bootstrap;
-	private String datatables;
-	private String theme;
-	private String wpuicore;
+	
+	/**
+	 * location of bootstrap 3. Default: https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js
+	 */
+	private String bootstrap ="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js";
+	/**
+	 * The location of jquery datatables. Default: https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js
+	 */
+	private String datatables ="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.css";
+	/**
+	 * the location of rs ui core. Default: /META-INF/resources/webjars/rs-ui-core/1.0/js/rs-navigation.js
+	 */
+	private String rsuicore ="/META-INF/resources/webjars/rs-ui-core/1.0/styles/rs-all.css";
+	/**
+	 * the location of rs theme. Default: /META-INF/resources/webjars/rs-ui-core/1.0/theme/wp-theme-office/all.css
+	 */
+	private String theme ="/META-INF/resources/webjars/rs-ui-core/1.0/theme/wp-theme-office/all.css";
 
 	/**
 	 * 
@@ -60,10 +73,10 @@ public class RsCdnCssProperties {
 	 * @return
 	 */
 	public String getWpuicore() {
-		return wpuicore;
+		return rsuicore;
 	}
 
 	public void setWpuicore(String wpuicore) {
-		this.wpuicore = wpuicore;
+		this.rsuicore = wpuicore;
 	}
 }

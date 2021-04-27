@@ -7,19 +7,20 @@
  * in the user manual at https://docs.gradle.org/6.0/userguide/multi_project_builds.html
  */
 
-include 'rsapp-spring-boot-starter'
+rootProject.name = 'rsapp'
+include (':rsapp-spring-boot-starter')
 //
 // autoconfigure is use to grab required dependencies
-include 'rsapp-autoconfigure'
+include (':rsapp-autoconfigure')
 //
 // mvvm module depends on the abstraction layer
-include 'rsapp-mvvm'
+include (':rsapp-mvvm')
 
 // webjar module for common static files
-include 'rsapp-webjars'
+include (':rsapp-webjars')
 //
 // the web module depends on the mvvm
 //include 'rsapp-web'
 //
 // test app
-include 'sample-app'
+//include (':sample-app')
