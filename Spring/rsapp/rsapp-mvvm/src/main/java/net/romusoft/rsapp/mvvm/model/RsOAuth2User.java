@@ -79,21 +79,33 @@ public class RsOAuth2User implements OAuth2User, Serializable {
 		this.nameAttributeKey = nameAttributeKey;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public String getName() {
 		return this.getAttribute(this.nameAttributeKey).toString();
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.authorities;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public Map<String, Object> getAttributes() {
 		return this.attributes;
 	}
 
+	/**
+	 * 
+	 */
 	private Set<GrantedAuthority> sortAuthorities(Collection<? extends GrantedAuthority> authorities) {
 		SortedSet<GrantedAuthority> sortedAuthorities = new TreeSet<>(
 				Comparator.comparing(GrantedAuthority::getAuthority));
@@ -101,6 +113,9 @@ public class RsOAuth2User implements OAuth2User, Serializable {
 		return sortedAuthorities;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -119,6 +134,9 @@ public class RsOAuth2User implements OAuth2User, Serializable {
 		return this.getAttributes().equals(that.getAttributes());
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public int hashCode() {
 		int result = this.getName().hashCode();
@@ -127,6 +145,9 @@ public class RsOAuth2User implements OAuth2User, Serializable {
 		return result;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

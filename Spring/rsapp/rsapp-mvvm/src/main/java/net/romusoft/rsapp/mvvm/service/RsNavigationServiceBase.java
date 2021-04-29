@@ -1,7 +1,7 @@
 package net.romusoft.rsapp.mvvm.service;
 
 /*********************************************************************************************
- * @COPYRIGHT 					(c) 2019 ROMUSOFT, LLC., BILLINGS,MONTANA ALL RIGHTS RESERVED 
+ * @COPYRIGHT 					(c) 2021 ROMUSOFT, LLC., BILLINGS,MONTANA ALL RIGHTS RESERVED 
  * 				THIS SOFTWARE IS FURNISHED UNDER A LICENSE AND MAY BE USED AND COPIED ONLY IN
  *            	ACCORDANCE WITH THE TERMS OF SUCH LICENSE AND WITH THE INCLUSION OF THE ABOVE COPYRIGHT NOTICE. 
  *            	THIS SOFTWARE OR ANY OTHER COPIES THEREOF MAY NOT BE PROVIDED OR OTHERWISE MADE AVAILABLE TO ANY OTHER PERSON. 
@@ -10,7 +10,7 @@ package net.romusoft.rsapp.mvvm.service;
  * @DESCRIPTION : abstract class that implements the tab navigation service interface.
  * 
  * 
- * @PROGRAM : application template :  11/15/2018 FUNCTION :
+ * @PROGRAM : application template :  04/27/2021 FUNCTION :
  * 
  * @ENVIRONMENT : java
  * 
@@ -25,6 +25,8 @@ package net.romusoft.rsapp.mvvm.service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -41,36 +43,42 @@ import net.romusoft.rsapp.mvvm.model.RsNavigationTabItem;
 public abstract class RsNavigationServiceBase implements RsNavigationService {
 
 	private RsNavigationTab activeTab = null;
-	private List<RsNavigationTab> tabList = new ArrayList<RsNavigationTab>();
+	private final List<RsNavigationTab> tabList = new ArrayList<RsNavigationTab>();
 
 	/**
 	 * initialize all necessary properties for the service
 	 */
-	public RsNavigationServiceBase() {
-
-		/*
-		 * initialize or populate the tab list and items
-		 */
+	@PostConstruct
+	public void init() {
 		initializeTabs(tabList);
 	}
 
 	/**
-	 * Return the instance of the tab list to be used for the tabs
+	 * initialize tabs for your application
 	 * 
-	 * @return
+	 * @param tabList instance of the tab list to be used for the tabs
 	 */
 	protected abstract void initializeTabs(List<RsNavigationTab> tabList);
 
 	/**
-	 * the current active tab
+	 * the tab list to be configured for the application
 	 * 
-	 * @return
+	 */
+	public List<RsNavigationTab> getTabList() {
+		return tabList;
+	}
+
+	/**
+	 * the current active tab
 	 */
 	@Override
 	public RsNavigationTab getActiveTab() {
 		return activeTab;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void setActiveTab(RsNavigationTab activeTab) {
 		this.activeTab = activeTab;
@@ -137,8 +145,9 @@ public abstract class RsNavigationServiceBase implements RsNavigationService {
 
 		if (tabItemUri != null)
 			tabItemUri = tabItemUri.toLowerCase();
-		//
-		// find the target tab and activate find the target item tab and activate it
+		/*
+		 * find the target tab and activate find the target item tab and activate it
+		 */
 		activeTab = null;
 		for (RsNavigationTab tab : authorizedTabList) {
 			tab.setActive(false);
@@ -149,15 +158,22 @@ public abstract class RsNavigationServiceBase implements RsNavigationService {
 		}
 
 		if (activeTab == null)
-			return null;
-		//
-		// create a new list to return based on some predicates with the user roles
+			return activeTab;
+
+		/*
+		 * create a new list to return based on some predicates with the user roles
+		 */
 		boolean isSet = false;
-		RsNavigationTabItem currentTabItem = activeTab.getActiveTabItem();
+		RsNavigationTabItem currentActiveTabItem = activeTab.getActiveTabItem();
 		List<RsNavigationTabItem> tabItemList = activeTab.getItemList();
 		for (RsNavigationTabItem tabItem : tabItemList) {
-			//
-			// set the active for the current uri
+
+			/*
+			 * set the active for the current uri
+			 */
+			if (currentActiveTabItem == tabItem) {
+				continue;
+			}
 			tabItem.setActive(false);
 			if (tabItem.getUri().equalsIgnoreCase(tabItemUri)) {
 				tabItem.setActive(true);
@@ -167,17 +183,15 @@ public abstract class RsNavigationServiceBase implements RsNavigationService {
 		}
 
 		//
-		// inactivate the previous tab item
-		if (isSet == false) {
-			currentTabItem.setActive(false);
+		// inactivate the previous tabitem
+		if (isSet) {
+			currentActiveTabItem.setActive(false);
 		}
 		return activeTab;
 	}
 
 	/**
 	 * retrieve the list of tabs the user is authorized to use
-	 * 
-	 * @return
 	 */
 	@Override
 	public List<RsNavigationTab> retrieveUserAuthorizedNavigationTabList() {
@@ -215,9 +229,6 @@ public abstract class RsNavigationServiceBase implements RsNavigationService {
 
 	/**
 	 * get authorized tab items for this tab
-	 * 
-	 * @param tab
-	 * @return
 	 */
 	@Override
 	public List<RsNavigationTabItem> getAuthorizedNavigationTabItemList(RsNavigationTab tab, String tabItemUri) {
@@ -234,11 +245,8 @@ public abstract class RsNavigationServiceBase implements RsNavigationService {
 		String[] roles = null;
 		if (auth != null) {
 			roles = convertToArray(auth.getAuthorities());
-			System.out.println("******  - 2 - Retrieve authorized navigation item list ****************");
 		} else {
 			roles = new String[] { "ROLE_NOT_AUTHENTICATED" };
-			System.out.println(
-					"******  - 2 - NOT_AUTHENTICATED - Retrieve authorized navigation item list ****************");
 		}
 
 		List<RsNavigationTabItem> authorizedTabItemList = new ArrayList<RsNavigationTabItem>();
@@ -269,9 +277,9 @@ public abstract class RsNavigationServiceBase implements RsNavigationService {
 	/**
 	 * Check in a role coming from the category is in a user's list of roles
 	 * 
-	 * @param roles
-	 * @param role
-	 * @return
+	 * @param roles list of roles
+	 * @param role  target role
+	 * @return whether the role is in the list
 	 */
 	private boolean isInRole(String[] roles, String role) {
 

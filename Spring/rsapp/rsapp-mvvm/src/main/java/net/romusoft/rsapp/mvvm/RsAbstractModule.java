@@ -7,7 +7,7 @@ import net.romusoft.rsapp.mvvm.model.RsNotificationMessage;
 /**
  * the definition of a module in the system
  * 
- * @author eromu_000
+ * @author Emmanuel Romulus
  *
  */
 public abstract class RsAbstractModule implements IRsModule {

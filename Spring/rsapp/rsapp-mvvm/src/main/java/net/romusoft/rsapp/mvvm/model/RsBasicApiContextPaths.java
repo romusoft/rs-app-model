@@ -2,7 +2,7 @@ package net.romusoft.rsapp.mvvm.model;
 
 /**
  * 
- * @author eromu_000
+ * @author Emmanuel Romulus
  *
  */
 public class RsBasicApiContextPaths {

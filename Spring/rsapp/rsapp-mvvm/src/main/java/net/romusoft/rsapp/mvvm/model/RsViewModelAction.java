@@ -5,7 +5,7 @@ import net.romusoft.rsapp.mvvm.RsAbstractViewModelItem;
 /**
  * action object description: buttons, links, etc..
  * 
- * @author romulus
+ * @author Emmanuel Romulus
  *
  */
 public class RsViewModelAction extends RsAbstractViewModelItem {
@@ -13,10 +13,10 @@ public class RsViewModelAction extends RsAbstractViewModelItem {
 	private String url = "";
 	private String message = "";
 
-
 	/**
+	 * Initialize an action
 	 * 
-	 * @param text
+	 * @param text the action text - may be a button or link text
 	 */
 	public RsViewModelAction(String text) {
 		super();
@@ -24,9 +24,10 @@ public class RsViewModelAction extends RsAbstractViewModelItem {
 	}
 
 	/**
+	 * Initialize an action
 	 * 
-	 * @param text
-	 * @param url
+	 * @param text the action text - may be a button or link text
+	 * @param url  Url for the action to navigate to
 	 */
 	public RsViewModelAction(String text, String url) {
 		super();
@@ -35,11 +36,11 @@ public class RsViewModelAction extends RsAbstractViewModelItem {
 	}
 
 	/**
+	 * Initialize an action
 	 * 
-	 * @param text
-	 * @param url
-	 * @param description
-	 * @param visible
+	 * @param text    the action text - may be a button or link text
+	 * @param url     Url for the action to navigate to
+	 * @param visible whether the element for the action should be visible
 	 */
 	public RsViewModelAction(String text, String url, boolean visible) {
 		super();
@@ -49,10 +50,11 @@ public class RsViewModelAction extends RsAbstractViewModelItem {
 	}
 
 	/**
+	 * Initialize an action
 	 * 
-	 * @param text
-	 * @param url
-	 * @param description
+	 * @param text        the action text - may be a button or link text
+	 * @param url         Url for the action to navigate to
+	 * @param description description or tooltip for the action
 	 */
 	public RsViewModelAction(String text, String url, String description) {
 		super();
@@ -62,11 +64,12 @@ public class RsViewModelAction extends RsAbstractViewModelItem {
 	}
 
 	/**
+	 * Initialize an action
 	 * 
-	 * @param text
-	 * @param url
-	 * @param description
-	 * @param visible
+	 * @param text        the action text - may be a button or link text
+	 * @param url         Url for the action to navigate to *
+	 * @param description description or tooltip for the action
+	 * @param visible     whether the element for the action should be visible
 	 */
 	public RsViewModelAction(String text, String url, String description, boolean visible) {
 		super();
@@ -77,9 +80,10 @@ public class RsViewModelAction extends RsAbstractViewModelItem {
 	}
 
 	/**
+	 * Initialize an action
 	 * 
-	 * @param text
-	 * @param visible
+	 * @param text    the action text - may be a button or link text
+	 * @param visible whether the element for the action should be visible
 	 */
 	public RsViewModelAction(String text, boolean visible) {
 		super();
@@ -88,10 +92,11 @@ public class RsViewModelAction extends RsAbstractViewModelItem {
 	}
 
 	/**
+	 * Initialize an action
 	 * 
-	 * @param text
-	 * @param visible
-	 * @param enabled
+	 * @param text     the action text - may be a button or link text
+	 * @param visible  whether the element for the action should be visible
+	 * @param disabled whether the element for the action should be enabled
 	 */
 	public RsViewModelAction(String text, boolean visible, boolean disabled) {
 		super();
@@ -101,37 +106,55 @@ public class RsViewModelAction extends RsAbstractViewModelItem {
 	}
 
 	/**
+	 * Name of the action
 	 * 
-	 * @return
+	 * @return Name of the action
 	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Name of the action
+	 * 
+	 * @param name the Name of the action
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
+	 * Url for the action to navigate to
 	 * 
-	 * @return
+	 * @return Url for the action to navigate to
 	 */
 	public String getUrl() {
 		return url;
 	}
 
+	/**
+	 * Url for the action to navigate to
+	 * 
+	 * @param url Url for the action to navigate to
+	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}
 
 	/**
+	 * Message confirmation for an action
 	 * 
-	 * @return
+	 * @return Message confirmation for an action
 	 */
 	public String getMessage() {
 		return message;
 	}
 
+	/**
+	 * Message confirmation for an action
+	 * 
+	 * @param message Message confirmation for an action
+	 */
 	public void setMessage(String message) {
 		this.message = message;
 	}

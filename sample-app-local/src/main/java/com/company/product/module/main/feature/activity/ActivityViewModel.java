@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.ui.Model;
 
 import net.romusoft.rsapp.mvvm.IRsView;
-import net.romusoft.rsapp.mvvm.RsAbstractViewModel2;
+import net.romusoft.rsapp.mvvm.RsAbstractViewModel;
 
-public class ActivityViewModel extends RsAbstractViewModel2<VActivityList> {
+public class ActivityViewModel extends RsAbstractViewModel<VActivityList> {
 
 	private List<String> data = new ArrayList<String>();
 

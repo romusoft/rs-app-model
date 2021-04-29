@@ -3,52 +3,20 @@ package net.romusoft.rsapp.mvvm.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
+import net.romusoft.rsapp.mvvm.IRsModel;
+
 /**
  * general utility to help with string manipulation, type conversion, etc..
  * 
- * @author romulus
+ * @author Emmanuel Romulus
  *
  */
 public class RsGeneralUtilities {
-	/**
-	 * populate the principal data. This comes from WAPA portal
-	 * 
-	 * @return
-	 *//*
-		 * @SuppressWarnings("rawtypes") public static CustomUserDetails
-		 * getCustomUserDetails() {
-		 * 
-		 * OAuth2Authentication auth=
-		 * (OAuth2Authentication)SecurityContextHolder.getContext().getAuthentication();
-		 * UsernamePasswordAuthenticationToken authentictionToken =
-		 * (UsernamePasswordAuthenticationToken) auth .getUserAuthentication();
-		 * 
-		 * // Create a mapper configure it to not fail on unknown properties
-		 * 
-		 * CustomUserDetails user = null; ObjectMapper mapper = new ObjectMapper();
-		 * mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		 * 
-		 * LinkedHashMap details = (LinkedHashMap) authentictionToken.getDetails();
-		 * JsonNode jsonNode = mapper.convertValue(details, JsonNode.class); JsonNode
-		 * principalNode = jsonNode.findValue("principal");
-		 * 
-		 * try {
-		 * 
-		 * // deserialize the json principal node into a custom user details JsonParser
-		 * jparser = principalNode.traverse(); user = mapper.readValue(jparser,
-		 * CustomUserDetails.class);
-		 * 
-		 * // get the roles from the principal node List<String> roles =
-		 * principalNode.findValuesAsText("authority"); user.setRoles(roles);
-		 * 
-		 * } catch (JsonParseException e) { e.printStackTrace(); } catch
-		 * (JsonMappingException e) { e.printStackTrace(); } catch (IOException e) {
-		 * e.printStackTrace(); } return user; }
-		 */
 
 	/**
 	 * Requires the specified pre-condition to be <code>true</code> upon entry to an
@@ -70,21 +38,11 @@ public class RsGeneralUtilities {
 		}
 	}
 
-//	/**
-//	 * check whether the user is logged in
-//	 * 
-//	 * @return
-//	 */
-//	public static boolean isLoggedIn() {
-//		OAuth2Authentication auth = (OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication();
-//		return auth != null;
-//	}
-
 	/**
 	 * decode url strings
 	 * 
-	 * @param value
-	 * @return
+	 * @param value value to decode
+	 * @return a clean json string
 	 */
 	public static String decodeValue(String value) {
 		try {
@@ -94,7 +52,12 @@ public class RsGeneralUtilities {
 		}
 	}
 
-	public User getCurrentUser() {
+	/**
+	 * the current user
+	 * 
+	 * @return the current user
+	 */
+	public static User getCurrentUser() {
 
 		Object obj = SecurityContextHolder.getContext().getAuthentication().getDetails();
 		if (obj == null) {
@@ -102,4 +65,28 @@ public class RsGeneralUtilities {
 		}
 		return null;
 	}
+
+	/**
+	 * true/false whether the string is empty or null
+	 * 
+	 * @param str value to evaluate
+	 * @return true/false whether the string is empty or null
+	 */
+	public static boolean isNullOrEmpty(String str) {
+		if (str == null || str.isEmpty() || str.equalsIgnoreCase("NULL"))
+			return true;
+		return false;
+	}
+
+	/**
+	 * whether the list is null or empty
+	 * @param list the list to check
+	 * @return whether the list is null or empty
+	 */
+	public static boolean isNullOrEmpty(List<? extends IRsModel> list) {
+		if (list == null || list.isEmpty())
+			return true;
+		return false;
+	}
+
 }

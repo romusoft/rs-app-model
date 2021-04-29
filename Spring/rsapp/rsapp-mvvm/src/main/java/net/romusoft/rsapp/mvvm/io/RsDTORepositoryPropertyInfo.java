@@ -25,41 +25,44 @@ package net.romusoft.rsapp.mvvm.io;
 /**
  * To be used with the XmlJsonUtil MODULE : XmlJsonPropertyInfo.java
  * 
- * @author romulus
+ * @author Emmanuel Romulus
  *
  */
-public class DTORepositoryPropertyInfo {
+public class RsDTORepositoryPropertyInfo {
 
 	private String columnName;
 	private String propertyName;
 	private String propertyType;
 
 	/**
+	 * instantiate a property info
 	 * 
-	 * @param propertyName
-	 * @param columnName
+	 * @param propertyName the name of the property
 	 */
-	public DTORepositoryPropertyInfo(String propertyName) {
+	public RsDTORepositoryPropertyInfo(String propertyName) {
 		this.propertyName = propertyName;
 	}
 
 	/**
+	 * constructor with the name of the property and the column it is mapped to.
 	 * 
-	 * @param propertyName
-	 * @param columnName
+	 * @param propertyName the name of the property
+	 * @param columnName   the column the property is to map to
 	 */
-	public DTORepositoryPropertyInfo(String propertyName, String columnName) {
+	public RsDTORepositoryPropertyInfo(String propertyName, String columnName) {
 		this.propertyName = propertyName;
 		this.columnName = columnName;
 	}
 
 	/**
+	 * constructor with the name of the property and the column it is mapped to, and
+	 * property type
 	 * 
-	 * @param propertyName
-	 * @param propertyType
-	 * @param columnName
+	 * @param propertyName the name of the property
+	 * @param propertyType the type of property
+	 * @param columnName   the column the property is to map to
 	 */
-	public DTORepositoryPropertyInfo(String propertyName, String columnName, String propertyType) {
+	public RsDTORepositoryPropertyInfo(String propertyName, String columnName, String propertyType) {
 		this.propertyName = propertyName;
 		this.propertyType = propertyType;
 		this.columnName = columnName;
@@ -68,12 +71,17 @@ public class DTORepositoryPropertyInfo {
 	/**
 	 * column name to as represented in the database
 	 * 
-	 * @return
+	 * @return the column name
 	 */
 	public String getColumnName() {
 		return columnName;
 	}
 
+	/**
+	 * set the column name
+	 * 
+	 * @param columnName the column name
+	 */
 	public void setColumnName(String columnName) {
 		this.columnName = columnName;
 	}
@@ -81,12 +89,17 @@ public class DTORepositoryPropertyInfo {
 	/**
 	 * property name to map the column to
 	 * 
-	 * @return
+	 * @return the name of the property
 	 */
 	public String getPropertyName() {
 		return propertyName;
 	}
 
+	/**
+	 * set the property name
+	 * 
+	 * @param propertyName the name of the property
+	 */
 	public void setPropertyName(String propertyName) {
 		this.propertyName = propertyName;
 	}
@@ -94,12 +107,17 @@ public class DTORepositoryPropertyInfo {
 	/**
 	 * property type that represents the data type of the class property
 	 * 
-	 * @return
+	 * @return the property type
 	 */
 	public String getPropertyType() {
 		return propertyType;
 	}
 
+	/**
+	 * set the property type
+	 * 
+	 * @param propertyType the property type
+	 */
 	public void setPropertyType(String propertyType) {
 		this.propertyType = propertyType;
 	}

@@ -69,17 +69,25 @@ import com.fasterxml.jackson.databind.type.CollectionLikeType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
-public class XmlJsonUtil {
+/**
+ * Utility to extract sql xml aggregation queries into pojos
+ * 
+ * @author Emmanuel Romulus
+ *
+ */
+public class RsXmlJsonUtil {
 
 	/**
 	 * convert xml string to pojo
 	 * 
-	 * @param xmlStringData
-	 * @param propertyInfos
-	 * @param clazz
-	 * @return
+	 * @param <T>           the target data type
+	 * @param xmlStringData the xml string. it may come from a database call that
+	 *                      returns a clob
+	 * @param propertyInfos property infos to do column to property mapping
+	 * @param clazz         the target class to return data for
+	 * @return a list of records for the target data type
 	 */
-	public static <T> List<T> getDataObjects(String xmlStringData, List<XmlJsonPropertyInfo> propertyInfos,
+	public static <T> List<T> getDataObjects(String xmlStringData, List<RsXmlJsonPropertyInfo> propertyInfos,
 			Class<T> clazz) {
 		String jsondata = convertXmlToJson(xmlStringData, propertyInfos);
 		List<T> list = convertJsonToPOJO(jsondata, clazz);
@@ -94,7 +102,16 @@ public class XmlJsonUtil {
 	 * @param clazz
 	 * @return
 	 */
-	public static <T> List<T> getDataObjects(Clob xmlClobData, List<XmlJsonPropertyInfo> propertyInfos,
+	/**
+	 * convert a clob that contains xml to pojos
+	 * 
+	 * @param <T>           the target data type
+	 * @param xmlClobData   clob data to convert to object
+	 * @param propertyInfos property infos to do column to property mapping
+	 * @param clazz         the target class to return data for
+	 * @return a list of records for the target data type
+	 */
+	public static <T> List<T> getDataObjects(Clob xmlClobData, List<RsXmlJsonPropertyInfo> propertyInfos,
 			Class<T> clazz) {
 		String jsondata = convertXmlToJson(xmlClobData, propertyInfos);
 		List<T> list = convertJsonToPOJO(jsondata, clazz);
@@ -104,8 +121,8 @@ public class XmlJsonUtil {
 	/**
 	 * Takes xml as input and return json
 	 * 
-	 * @param xmlStringData
-	 * @return
+	 * @param xmlStringData xml string
+	 * @return json string
 	 */
 	public static String convertXmlToJson(String xmlStringData) {
 
@@ -116,11 +133,12 @@ public class XmlJsonUtil {
 	 * Takes xml as input and return json. The names of the json properties can be
 	 * mapped to columns returned from db query
 	 * 
-	 * @param xmlStringData
-	 * @return
-	 * @author romulus
+	 * @param xmlStringData the xml string. it may come from a database call that
+	 *                      returns a clob
+	 * @param propertyInfos property infos to do column to property mapping
+	 * @return a json string
 	 */
-	public static String convertXmlToJson(String xmlStringData, List<XmlJsonPropertyInfo> propertyInfos) {
+	public static String convertXmlToJson(String xmlStringData, List<RsXmlJsonPropertyInfo> propertyInfos) {
 
 		Document document = getXmlDocumentBuilder(xmlStringData);
 		return convertXmlDocumentToJson(document, propertyInfos);
@@ -129,11 +147,11 @@ public class XmlJsonUtil {
 	/**
 	 * Convert a clob of xml to json
 	 * 
-	 * @param xmlStringData
-	 * @return
-	 * @author romulus
+	 * @param xmlClobData   clob data
+	 * @param propertyInfos property infos to do column to property mapping
+	 * @return json string
 	 */
-	public static String convertXmlToJson(Clob xmlClobData, List<XmlJsonPropertyInfo> propertyInfos) {
+	public static String convertXmlToJson(Clob xmlClobData, List<RsXmlJsonPropertyInfo> propertyInfos) {
 
 		Document document = getXmlDocumentBuilder(xmlClobData);
 		return convertXmlDocumentToJson(document, propertyInfos);
@@ -143,11 +161,11 @@ public class XmlJsonUtil {
 	 * The whole operation is based on an having an xml document given an xml
 	 * document, convert it to json
 	 * 
-	 * @param document
-	 * @param propertyInfos
-	 * @return
+	 * @param document      an xml document
+	 * @param propertyInfos property infos to do column to property mapping
+	 * @return a json string
 	 */
-	private static String convertXmlDocumentToJson(Document document, List<XmlJsonPropertyInfo> propertyInfos) {
+	private static String convertXmlDocumentToJson(Document document, List<RsXmlJsonPropertyInfo> propertyInfos) {
 
 		if (document == null)
 			return "Invalid xml data";
@@ -184,12 +202,12 @@ public class XmlJsonUtil {
 	 * Recursively create the json nodes from xml The utility makes use of
 	 * attributes in xml to determin properties for an object
 	 * 
-	 * @param node
-	 * @param stringBuilder
+	 * @param node          start with the node
+	 * @param stringBuilder string builder used to parse xml elements
 	 * @author romulus
-	 * @throws Exception
+	 * @throws Exception exception thrown if any
 	 */
-	private static void processNode(Node node, StringBuilder stringBuilder, List<XmlJsonPropertyInfo> propertyInfos)
+	private static void processNode(Node node, StringBuilder stringBuilder, List<RsXmlJsonPropertyInfo> propertyInfos)
 			throws Exception {
 
 		String startRecord = "{";
@@ -197,9 +215,9 @@ public class XmlJsonUtil {
 		/*
 		 * check for array
 		 */
-		XmlJsonPropertyInfo info = getAppliedPropertyName(node.getNodeName(), propertyInfos);
+		RsXmlJsonPropertyInfo info = getAppliedPropertyName(node.getNodeName(), propertyInfos);
 		boolean isarray = info.getPropertyType() != null
-				&& info.getPropertyType().equals(XmlJsonPropertyInfo.ARRAY_TYPE);
+				&& info.getPropertyType().equals(RsXmlJsonPropertyInfo.ARRAY_TYPE);
 		if (isarray) {
 			startRecord = "[";
 			endRecord = "]";
@@ -230,26 +248,26 @@ public class XmlJsonUtil {
 				String value = attr.getNodeValue();
 				if (info.getPropertyType() != null) {
 					switch (info.getPropertyType()) {
-					case XmlJsonPropertyInfo.DATETIME_TYPE:
+					case RsXmlJsonPropertyInfo.DATETIME_TYPE:
 						value = value.replace(" ", "T");
 						break;
-					case XmlJsonPropertyInfo.BOOLEAN_Y_N_TYPE:
+					case RsXmlJsonPropertyInfo.BOOLEAN_Y_N_TYPE:
 						value = value != null && value.toLowerCase().equals("Y") ? "true" : "false";
 						break;
-					case XmlJsonPropertyInfo.BOOLEAN_1_0_TYPE:
+					case RsXmlJsonPropertyInfo.BOOLEAN_1_0_TYPE:
 						value = value != null && value.toLowerCase().equals("1") ? "true" : "false";
 						break;
-					case XmlJsonPropertyInfo.BOOLEAN_T_F_TYPE:
+					case RsXmlJsonPropertyInfo.BOOLEAN_T_F_TYPE:
 						value = value != null && value.toLowerCase().equals("t") ? "true" : "false";
 						break;
-					case XmlJsonPropertyInfo.BOOLEAN_TRUE_FALSE_TYPE:
+					case RsXmlJsonPropertyInfo.BOOLEAN_TRUE_FALSE_TYPE:
 						value = value != null && value.toLowerCase().equals("true") ? "true" : "false";
 						break;
 
-					case XmlJsonPropertyInfo.INTEGER_TYPE:
+					case RsXmlJsonPropertyInfo.INTEGER_TYPE:
 						quotes = "";
 						break;
-					case XmlJsonPropertyInfo.ARRAY_TYPE:
+					case RsXmlJsonPropertyInfo.ARRAY_TYPE:
 						break;
 
 					default:
@@ -327,23 +345,23 @@ public class XmlJsonUtil {
 	 * If the name of a column matches its property counter part, use it for the
 	 * json node name otherwise, use the name of the column
 	 * 
-	 * @param xmlNodeName
-	 * @param propertyInfos
-	 * @return
+	 * @param xmlNodeName   the xml element name
+	 * @param propertyInfos property info used for mapping fields to columns
+	 * @return the applied property info object
 	 */
-	private static XmlJsonPropertyInfo getAppliedPropertyName(String xmlNodeName,
-			List<XmlJsonPropertyInfo> propertyInfos) {
-		XmlJsonPropertyInfo targetInfo = null;
+	private static RsXmlJsonPropertyInfo getAppliedPropertyName(String xmlNodeName,
+			List<RsXmlJsonPropertyInfo> propertyInfos) {
+		RsXmlJsonPropertyInfo targetInfo = null;
 		if (propertyInfos == null) {
 
-			targetInfo = new XmlJsonPropertyInfo(xmlNodeName, xmlNodeName);
+			targetInfo = new RsXmlJsonPropertyInfo(xmlNodeName, xmlNodeName);
 			return targetInfo;
 		}
 
 		//
 		// find the property info from the list
 		//
-		for (XmlJsonPropertyInfo info : propertyInfos) {
+		for (RsXmlJsonPropertyInfo info : propertyInfos) {
 			if (xmlNodeName.toUpperCase().equals(info.getColumnName().toUpperCase())) {
 				targetInfo = info;
 				break;
@@ -355,7 +373,7 @@ public class XmlJsonUtil {
 		//
 		if (targetInfo == null) {
 
-			targetInfo = new XmlJsonPropertyInfo(xmlNodeName, xmlNodeName);
+			targetInfo = new RsXmlJsonPropertyInfo(xmlNodeName, xmlNodeName);
 		}
 
 		return targetInfo;
@@ -365,8 +383,8 @@ public class XmlJsonUtil {
 	/**
 	 * given an xml string convert it to an xml document object
 	 * 
-	 * @param xmlStringData
-	 * @return
+	 * @param xmlStringData xml string to parse into a document
+	 * @return the xml document object
 	 * @author romulus
 	 */
 	private static Document getXmlDocumentBuilder(String xmlStringData) {
@@ -395,8 +413,8 @@ public class XmlJsonUtil {
 	/**
 	 * given an xmlClobData, convert it to an xml document object
 	 * 
-	 * @param xmlClobData
-	 * @return
+	 * @param xmlClobData clob value to parse into an xml document
+	 * @return the xml document object
 	 * @author romulus
 	 */
 	private static Document getXmlDocumentBuilder(Clob xmlClobData) {
@@ -426,9 +444,11 @@ public class XmlJsonUtil {
 	/**
 	 * Mapped json objects to pojos using the target class
 	 * 
-	 * @param jsonData
+	 * @param <T>      the generic target type
+	 * @param jsonData json string to parse
+	 * @param clazz    the target class
+	 * @return a list of records for the target data type
 	 * @author romulus
-	 * @return
 	 */
 	public static <T> List<T> convertJsonToPOJO(String jsonData, Class<T> clazz) {
 		/*

@@ -11,18 +11,18 @@ import org.springframework.context.annotation.Configuration;
 import net.romusoft.rsapp.autoconfigure.properties.RsAssemblyInfoProperties;
 import net.romusoft.rsapp.autoconfigure.properties.RsCdnCssProperties;
 import net.romusoft.rsapp.autoconfigure.properties.RsCdnJsProperties;
-import net.romusoft.rsapp.mvvm.model.RsAppViewModel;
 import net.romusoft.rsapp.mvvm.model.RsAssemblyInfo;
+import net.romusoft.rsapp.mvvm.model.RsCDNViewModel;
 
 /**
  * Configure beans based on resource properties {RsCdnJsProperties,
  * RsCdnCssProperties} for class RsCdnViewModel
  *
- * @author eromu_000
+ * @author Emmanuel Romulus
  *
  */
 @Configuration
-@ConditionalOnClass(RsAppViewModel.class)
+@ConditionalOnClass(RsCDNViewModel.class)
 @EnableConfigurationProperties(value = { RsCdnJsProperties.class, RsCdnCssProperties.class,
 		RsAssemblyInfoProperties.class })
 
@@ -39,13 +39,13 @@ public class RsAppAutoConfiguration {
 	/**
 	 * configure the cdn bean
 	 * 
-	 * @return
+	 * @return an RsCDNViewModel object if one does not exists
 	 */
 	@Bean
 	@ConditionalOnMissingBean
-	public RsAppViewModel cdnViewModel() {
+	public RsCDNViewModel cdnViewModel() {
 
-		RsAppViewModel viewModel = new RsAppViewModel();
+		RsCDNViewModel viewModel = new RsCDNViewModel();
 		/*
 		 * Cdn for js files
 		 */
@@ -58,18 +58,18 @@ public class RsAppAutoConfiguration {
 		viewModel.setBootstrapJs(bootstrapJs);
 		viewModel.setDatatablesJs(datatablesJs);
 		viewModel.setKendouiJs(kendouiJs);
-		viewModel.setWpuicoreCss(wpuicoreJs);
+		viewModel.setRsuicoreCss(wpuicoreJs);
 		/*
 		 * Cdn for css files
 		 */
 		String bootstrapCss = cdnCssProperties.getBootstrap() == null ? "" : cdnCssProperties.getBootstrap();
 		String datatablesCss = cdnJsProperties.getDatatables() == null ? "" : cdnCssProperties.getDatatables();
 		String themeCss = cdnCssProperties.getTheme() == null ? "" : cdnCssProperties.getTheme();
-		String wpuicoreCss = cdnCssProperties.getWpuicore() == null ? "" : cdnCssProperties.getWpuicore();
+		String rsuicoreCss = cdnCssProperties.getRsuicore() == null ? "" : cdnCssProperties.getRsuicore();
 		viewModel.setBootstrapCss(bootstrapCss);
 		viewModel.setDatatableCss(datatablesCss);
 		viewModel.setThemeCss(themeCss);
-		viewModel.setWpuicoreCss(wpuicoreCss);
+		viewModel.setRsuicoreCss(rsuicoreCss);
 
 		return viewModel;
 	}
@@ -77,7 +77,7 @@ public class RsAppAutoConfiguration {
 	/**
 	 * configure the assemblyinfo bean
 	 * 
-	 * @return
+	 * @return an RsAssemblyInfo object if one does not exists
 	 */
 	@Bean
 	@ConditionalOnMissingBean

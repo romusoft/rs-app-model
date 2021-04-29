@@ -1,5 +1,11 @@
 package net.romusoft.rsapp.mvvm.model;
 
+/**
+ * Holds information about an application based on where it is deployed
+ * 
+ * @author Emmanuel Romulus
+ *
+ */
 public class RsAssemblyInfo {
 
 	public static final String RS_ASSEMBLY_INFO_SESSION_ATTRIBUTE_NAME = "rsAssemblyInfo";
@@ -47,12 +53,17 @@ public class RsAssemblyInfo {
 	/**
 	 * deployment environment name of the app: staging, dev, prod, etc.
 	 * 
-	 * @return
+	 * @return the application environment
 	 */
 	public String getEnvironment() {
 		return environment;
 	}
 
+	/**
+	 * the applicationn environment
+	 * 
+	 * @param environment application environment
+	 */
 	public void setEnvironment(String environment) {
 		this.environment = environment;
 	}
@@ -60,12 +71,17 @@ public class RsAssemblyInfo {
 	/**
 	 * version deployed to the web server
 	 * 
-	 * @return
+	 * @return the application version
 	 */
 	public String getVersion() {
 		return version;
 	}
 
+	/**
+	 * application version
+	 * 
+	 * @param version the application version
+	 */
 	public void setVersion(String version) {
 		this.version = version;
 	}
@@ -73,12 +89,17 @@ public class RsAssemblyInfo {
 	/**
 	 * friendly or display name of the application
 	 * 
-	 * @return
+	 * @return the application title
 	 */
 	public String getApplicationTitle() {
 		return applicationTitle;
 	}
 
+	/**
+	 * application title
+	 * 
+	 * @param applicationTitle the application title
+	 */
 	public void setApplicationTitle(String applicationTitle) {
 		this.applicationTitle = applicationTitle;
 	}
@@ -86,12 +107,17 @@ public class RsAssemblyInfo {
 	/**
 	 * name of the application based on which the war file is created
 	 * 
-	 * @return
+	 * @return the application name
 	 */
 	public String getApplicationName() {
 		return applicationName;
 	}
 
+	/**
+	 * the application name
+	 * 
+	 * @param applicationName the application name
+	 */
 	public void setApplicationName(String applicationName) {
 		this.applicationName = applicationName;
 	}
@@ -100,12 +126,16 @@ public class RsAssemblyInfo {
 	 * the directory where the appconfig.properties file is located. the
 	 * appconfig.properties file must be located there and accessible for the app to
 	 * 
-	 * @return
+	 * @return the external properties file directory
 	 */
 	public String getPropertyFileDirectory() {
 		return propertyFileDirectory;
 	}
 
+	/**
+	 * 
+	 * @param propertyFileDirectory application external file directory
+	 */
 	public void setPropertyFileDirectory(String propertyFileDirectory) {
 		this.propertyFileDirectory = propertyFileDirectory;
 	}
@@ -113,12 +143,17 @@ public class RsAssemblyInfo {
 	/**
 	 * the application file name deployed on the server
 	 * 
-	 * @return
+	 * @return application file name
 	 */
 	public String getApplicationFilename() {
 		return applicationFilename;
 	}
 
+	/**
+	 * application file name
+	 * 
+	 * @param applicationFilename the application file name
+	 */
 	public void setApplicationFilename(String applicationFilename) {
 		this.applicationFilename = applicationFilename;
 	}
@@ -128,50 +163,69 @@ public class RsAssemblyInfo {
 	 * or un-deploy the app it is the name of the module seen on a weblogic server
 	 * after an app is deployed
 	 * 
-	 * @return
+	 * @return the application file title
 	 */
 	public String getApplicationFileTitle() {
 		return applicationFileTitle;
 	}
 
+	/**
+	 * set application file title
+	 * 
+	 * @param applicationFileTitle application file title
+	 */
 	public void setApplicationFileTitle(String applicationFileTitle) {
 		this.applicationFileTitle = applicationFileTitle;
 	}
 
 	/**
+	 * application version
 	 * 
-	 * @return
+	 * @return application version
 	 */
 	public String getApplicationVersion() {
 		return applicationVersion;
 	}
 
+	/**
+	 * set application version
+	 * 
+	 * @param applicationVersion application version
+	 */
 	public void setApplicationVersion(String applicationVersion) {
 		this.applicationVersion = applicationVersion;
 	}
 
 	/**
+	 * application environment
 	 * 
-	 * @return
+	 * @return application environment
 	 */
 	public String getApplicationEnvironment() {
 		return applicationEnvironment;
 	}
 
+	/**
+	 * application environment
+	 * 
+	 * @param applicationEnvironment the application environment
+	 */
 	public void setApplicationEnvironment(String applicationEnvironment) {
 		this.applicationEnvironment = applicationEnvironment;
 	}
 
 	/**
-	 * 
+	 * intialize the assembly info values from properties
 	 */
 	public void initialize() {
 		environment = environment.toUpperCase();
 		switch (environment) {
+		case "DEVEVELOPMENT":
 		case "DEV":
 			applicationVersion = applicationTitle + " Version: " + version + "-dev";
 			applicationEnvironment = "DEVELOPMENT";
 			break;
+		case "PRODUCTION":
 		case "PROD":
 			applicationVersion = applicationTitle + " Version: " + version + "-prod";
 			applicationEnvironment = "PRODUCTION";

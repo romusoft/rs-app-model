@@ -1,14 +1,14 @@
 
 /*********************************************************************************************
-* @COPYRIGHT                                                                               (c) 2018 WAPA, BILLINGS,MONTANA ALL RIGHTS RESERVED 
- *                                                            THIS SOFTWARE IS FURNISHED UNDER A LICENSE AND MAY BE USED AND COPIED ONLY IN
+* @COPYRIGHT  (c) 2021 WAPA, BILLINGS,MONTANA ALL RIGHTS RESERVED 
+ *            THIS SOFTWARE IS FURNISHED UNDER A LICENSE AND MAY BE USED AND COPIED ONLY IN
 *             ACCORDANCE WITH THE TERMS OF SUCH LICENSE AND WITH THE INCLUSION OF THE ABOVE COPYRIGHT NOTICE. 
  *            THIS SOFTWARE OR ANY OTHER COPIES THEREOF MAY NOT BE PROVIDED OR OTHERWISE MADE AVAILABLE TO ANY OTHER PERSON. 
  *            NO TITLE TO AND OWNERSHIP OF THE SOFTWARE IS HEREBY TRANSFERRED.
 * 
  * @DESCRIPTION : Used for supporting a flat dto object objects
 * 
- * @PROGRAM : application template :  11/15/2018 FUNCTION :
+ * @PROGRAM : application template :  05/01/2021 FUNCTION :
 * 
  * @ENVIRONMENT : java
 * 
@@ -21,6 +21,10 @@
 ***********************************************************************************************/
 package net.romusoft.rsapp.mvvm.io;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.sql.Clob;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,19 +34,30 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.type.CollectionLikeType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
+
+import net.romusoft.rsapp.mvvm.util.RsGeneralUtilities;
 
 /**
  * Used for supporting a flat dto object objects
  * 
- * @author romulus
+ * @author Emmanuel Romulus
  *
  */
 @Repository
-public class DTORepository {
+public class RsDTORepository {
 	public final static String STRING_TYPE = "string";
 	public final static String ARRAY_TYPE = "array";
 	public final static String DATETIME_TYPE = "datetime";
@@ -50,36 +65,41 @@ public class DTORepository {
 	public final static String BOOLEAN_1_0_TYPE = "1_0";
 	public final static String BOOLEAN_T_F_TYPE = "t_f";
 	public final static String BOOLEAN_TRUE_FALSE_TYPE = "true_false";
+	public final static String METADATA_FIELD = "metadata_field";
 
 	// get the entity manager to create queries;
 	@Autowired
 	private EntityManager entityManager;
 
 	/**
+	 * map a class to a navitive query results
 	 * 
-	 * @param nativeSqlString
-	 * @param propertyInfos
-	 * @param clazz
-	 * @return
-	 * @throws Exception
+	 * @param <T>             the target data type for return values
+	 * @param nativeSqlString the native sql to execute
+	 * @param propertyInfos   property infos to map columns to properteis
+	 * @param clazz           target data type to return
+	 * @return return a list of object for the target data type
+	 * @throws Exception the thrown exception if any
 	 */
-	public <T> List<T> getDataObjects(String nativeSqlString, DTORepositoryMapper propertyInfos, Class<T> clazz)
+	public <T> List<T> getDataObjects(String nativeSqlString, RsDTORepositoryMapper propertyInfos, Class<T> clazz)
 			throws Exception {
 
 		return getDataObjects(nativeSqlString, null, propertyInfos, clazz);
 	}
 
 	/**
+	 * map a class to a navitive query results
 	 * 
-	 * @param nativeSqlString
-	 * @param parameterMap
-	 * @param propertyInfos
-	 * @param clazz
-	 * @return
-	 * @throws Exception
+	 * @param <T>             the target data type for return values
+	 * @param nativeSqlString the native sql to execute
+	 * @param parameterMap    sql parameters
+	 * @param propertyInfos   property infos to map columns to properteis
+	 * @param clazz           target data type to return
+	 * @return return a list of object for the target data type
+	 * @throws Exception the thrown exception if any
 	 */
 	public <T> List<T> getDataObjects(String nativeSqlString, Map<String, Object> parameterMap,
-			DTORepositoryMapper propertyInfos, Class<T> clazz) throws Exception {
+			RsDTORepositoryMapper propertyInfos, Class<T> clazz) throws Exception {
 		List<T> list = null;
 
 		try {
@@ -87,12 +107,13 @@ public class DTORepository {
 
 			if (jsonData != null && jsonData.isEmpty() == false) {
 
-				list = DTORepositoryUtil.convertJsonToPOJO(jsonData, clazz);
+				list = convertJsonToPOJO(jsonData, clazz);
 			}
 
 		} catch (Exception e) {
 
 			System.out.println("Error during query execution. \n" + e.getMessage());
+			throw e;
 		}
 
 		return list;
@@ -111,6 +132,7 @@ public class DTORepository {
 	 * column of type T is selected. This method has suppressed warnings, so make
 	 * sure that your method is expecting the correct result back.
 	 * 
+	 * @param <T>             the target data type for return values
 	 * @param nativeSqlString sql query, parameters are okay.
 	 * @param parameterMap    parameter mapping, name to value.
 	 * 
@@ -118,7 +140,7 @@ public class DTORepository {
 	 *         T for single columns - the data returned is the result of the
 	 *         specified query.
 	 * 
-	 * @throws Exception
+	 * @throws Exception the thrown exception if any
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> List<T> getDataObjects(String nativeSqlString, Map<String, Object> parameterMap) throws Exception {
@@ -134,38 +156,43 @@ public class DTORepository {
 			/*
 			 * execute the query and return the data set
 			 */
-			data = query.getResultList();
+			Object tempData = query.getResultList();
+			data = (List<T>) tempData;
 
 		} catch (Exception e) {
 
 			System.out.println("Error during query execution. \n" + e.getMessage());
+			throw e;
 		}
 
 		return data;
 	}
 
 	/**
+	 * get json data from a native query
 	 * 
-	 * @param nativeSqlString
-	 * @param propertyInfos
-	 * @return
-	 * @throws Exception
+	 * 
+	 * @param nativeSqlString the native sql to execute
+	 * @param propertyInfos   property infos to map columns to properties
+	 * @return return a list of object for the target data type
+	 * @throws Exception the thrown exception in any
 	 */
-	public String getJsonData(String nativeSqlString, DTORepositoryMapper propertyInfos) throws Exception {
+	public String getJsonData(String nativeSqlString, RsDTORepositoryMapper propertyInfos) throws Exception {
 
 		return getJsonData(nativeSqlString, null, propertyInfos);
 	}
 
 	/**
+	 * get json data from a native query
 	 * 
-	 * @param nativeSqlString
-	 * @param parameterMap
-	 * @param propertyInfos
-	 * @return
-	 * @throws Exception
+	 * @param nativeSqlString the native sql to execute
+	 * @param parameterMap    sql parameters
+	 * @param propertyInfos   property infos to map columns to properties
+	 * @return return a list of object for the target data type
+	 * @throws Exception the thrown exception in any
 	 */
 	public String getJsonData(String nativeSqlString, Map<String, Object> parameterMap,
-			DTORepositoryMapper propertyInfos) throws Exception {
+			RsDTORepositoryMapper propertyInfos) throws Exception {
 		String jsonData = null;
 
 		/*
@@ -200,17 +227,19 @@ public class DTORepository {
 	}
 
 	/**
+	 * convert sql results to json
 	 * 
-	 * @param results
-	 * @param queryColumnNames
-	 * @return
-	 * @throws Exception
-	 * @throws JsonProcessingException
+	 * @param results       json string
+	 * @param propertyInfos property infos to map columns to properties
+	 * @return return a json string
+	 * @throws Exception the thrown exception in any
 	 */
-	private String convertSqlResultToJson(List<Object[]> results, DTORepositoryMapper propertyInfos) throws Exception {
+	private String convertSqlResultToJson(List<Object[]> results, RsDTORepositoryMapper propertyInfos)
+			throws Exception {
 
 		ObjectMapper mapper = new ObjectMapper();
 		ArrayNode jsonArray = mapper.createArrayNode();
+		// .set("metadata", metadataNode);
 
 		for (Object[] columns : results) {
 			/*
@@ -221,35 +250,40 @@ public class DTORepository {
 			}
 
 			ObjectNode node = mapper.createObjectNode();
+			ObjectNode metadataNode = mapper.createObjectNode();
+			node.set("metadata", metadataNode); // metadata is ready for this record
 
 			for (int i = 0; i < propertyInfos.size(); i++) {
 
 				String value = columns[i] == null ? null : columns[i].toString();
+				Clob clobValue = columns[i] instanceof Clob ? (Clob) columns[i] : null;
 				/*
 				 * validate value based on type check the type to use the appropriate json here
 				 * to see if date. if so, create the right format
 				 */
-				DTORepositoryPropertyInfo info = propertyInfos.get(i);
+				RsDTORepositoryPropertyInfo info = propertyInfos.get(i);
 				String type = info.getPropertyType();
 				if (type != null && type.isEmpty() == false && value != null) {
 					switch (type) {
-					case DTORepository.DATETIME_TYPE:
+					case RsDTORepository.DATETIME_TYPE:
 						value = value.replace(" ", "T");
 						break;
-					case DTORepository.BOOLEAN_Y_N_TYPE:
+					case RsDTORepository.BOOLEAN_Y_N_TYPE:
 						value = value != null && value.toLowerCase().equals("Y") ? "true" : "false";
 						break;
-					case DTORepository.BOOLEAN_1_0_TYPE:
+					case RsDTORepository.BOOLEAN_1_0_TYPE:
 						value = value != null && value.toLowerCase().equals("1") ? "true" : "false";
 						break;
-					case DTORepository.BOOLEAN_T_F_TYPE:
+					case RsDTORepository.BOOLEAN_T_F_TYPE:
 						value = value != null && value.toLowerCase().equals("t") ? "true" : "false";
 						break;
-					case DTORepository.BOOLEAN_TRUE_FALSE_TYPE:
+					case RsDTORepository.BOOLEAN_TRUE_FALSE_TYPE:
 						value = value != null && value.toLowerCase().equals("true") ? "true" : "false";
 						break;
 
-					case DTORepository.ARRAY_TYPE:
+					case RsDTORepository.ARRAY_TYPE:
+						break;
+					case RsDTORepository.METADATA_FIELD:
 						break;
 
 					default:
@@ -260,7 +294,38 @@ public class DTORepository {
 				/*
 				 * add the value to the node, and move on to the next column
 				 */
-				if (value != null)
+				if (clobValue != null) {
+					//
+					// convert the clob data to string by a buffering 2048 chars at a time
+					StringBuilder sb = new StringBuilder((int) clobValue.length());
+					Reader r = clobValue.getCharacterStream();
+					char[] cbuffer = new char[2048];
+					int n;
+					while ((n = r.read(cbuffer, 0, cbuffer.length)) != -1) {
+						sb.append(cbuffer, 0, n);
+					}
+					value = sb.toString();
+				}
+				if (info.getPropertyType() == RsDTORepository.METADATA_FIELD) {
+
+					if (value == null) {
+						value = "[]";
+					}
+					//
+					// First try to use the value as json. If not a valid json, use the value as is
+					ObjectMapper tempmapper = new ObjectMapper();
+					try {
+
+						JsonNode metadataValueNode = tempmapper.readTree(value);
+						metadataNode.set(info.getPropertyName(), metadataValueNode);
+					} catch (JsonProcessingException e) {
+						//
+						// not a valid json. Use the value as a scalar value
+						metadataNode.put(info.getPropertyName(), value);
+					}
+
+				} else if (value != null)
+
 					node.put(info.getPropertyName(), value);
 			}
 
@@ -280,14 +345,14 @@ public class DTORepository {
 	}
 
 	/**
+	 * Convert a single column result to json
 	 * 
-	 * @param results
-	 * @param queryColumnNames
-	 * @return
-	 * @throws Exception
-	 * @throws JsonProcessingException
+	 * @param results       json string
+	 * @param propertyInfos property infos to map columns to properties
+	 * @return return a json string
+	 * @throws Exception exception to be thrown if any
 	 */
-	private String convertSingleColumnSqlResultToJson(List<Object> results, DTORepositoryMapper propertyInfos)
+	private String convertSingleColumnSqlResultToJson(List<Object> results, RsDTORepositoryMapper propertyInfos)
 			throws Exception {
 
 		ObjectMapper mapper = new ObjectMapper();
@@ -297,7 +362,7 @@ public class DTORepository {
 			throw new Exception("DTORepositoryMapper must contain a single value");
 		}
 
-		DTORepositoryPropertyInfo info = propertyInfos.get(0);
+		RsDTORepositoryPropertyInfo info = propertyInfos.get(0);
 
 		for (Object column : results) {
 			String value = column == null ? null : column.toString();
@@ -308,23 +373,23 @@ public class DTORepository {
 			String type = info.getPropertyType();
 			if (type != null && type.isEmpty() == false && value != null) {
 				switch (type) {
-				case DTORepository.DATETIME_TYPE:
+				case RsDTORepository.DATETIME_TYPE:
 					value = value.replace(" ", "T");
 					break;
-				case DTORepository.BOOLEAN_Y_N_TYPE:
+				case RsDTORepository.BOOLEAN_Y_N_TYPE:
 					value = value != null && value.toLowerCase().equals("Y") ? "true" : "false";
 					break;
-				case DTORepository.BOOLEAN_1_0_TYPE:
+				case RsDTORepository.BOOLEAN_1_0_TYPE:
 					value = value != null && value.toLowerCase().equals("1") ? "true" : "false";
 					break;
-				case DTORepository.BOOLEAN_T_F_TYPE:
+				case RsDTORepository.BOOLEAN_T_F_TYPE:
 					value = value != null && value.toLowerCase().equals("t") ? "true" : "false";
 					break;
-				case DTORepository.BOOLEAN_TRUE_FALSE_TYPE:
+				case RsDTORepository.BOOLEAN_TRUE_FALSE_TYPE:
 					value = value != null && value.toLowerCase().equals("true") ? "true" : "false";
 					break;
 
-				case DTORepository.ARRAY_TYPE:
+				case RsDTORepository.ARRAY_TYPE:
 					break;
 
 				default:
@@ -349,6 +414,87 @@ public class DTORepository {
 			e.printStackTrace();
 		}
 		return json;
+	}
+
+	/**
+	 * Mapped json objects to pojos using the target class
+	 * 
+	 * 
+	 * @param <T>      the data type to return
+	 * @param jsonData json string to convert to the target data type
+	 * @param clazz    target data type to return
+	 * @return return a list of object for the target data type
+	 * 
+	 */
+	public static <T> List<T> convertJsonToPOJO(String jsonData, Class<T> clazz) {
+		//
+		// decode query string from url and remove models that we normally send in a
+		// post request from kendo data
+		//
+
+		String workingSet = RsGeneralUtilities.decodeValue(jsonData).replace("models=", "").trim();
+
+		//
+		// remove the models object coming from kendo if exists
+		//
+		String KENDO_MODEL_OBJECT_STRING = "{\"models\":";
+		if (workingSet.startsWith(KENDO_MODEL_OBJECT_STRING)) {
+			workingSet = workingSet.substring(KENDO_MODEL_OBJECT_STRING.length());
+			workingSet = workingSet.substring(0, workingSet.length() - 1);
+
+		}
+		/*
+		 * ensure the just is an array
+		 */
+		if (workingSet.trim().startsWith("[") == false) {
+			workingSet = "[" + workingSet + "]";
+		}
+		/*
+		 * Create the target list
+		 */
+		jsonData = workingSet;
+		List<T> datalist = null;
+
+		ObjectMapper mapper = new ObjectMapper(); // Create a mapper configure it to not fail on unknown properties
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		mapper.setDateFormat(new StdDateFormat());
+		try {
+			/*
+			 * create a collectionliketype reference that will tell the mapper what class to
+			 * use to deserialize those objects
+			 */
+			CollectionLikeType typeref = TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, clazz);
+			JsonNode actualObj = mapper.readTree(jsonData);
+			JsonParser jparser = actualObj.traverse();
+			datalist = mapper.readValue(jparser, typeref);
+
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return datalist;
+	}
+
+	/**
+	 * Get an expecting one record from the json string
+	 * 
+	 * @param <T>      the data type to return
+	 * @param jsonData json string to convert to the target data type
+	 * @param clazz    target data type to return
+	 * @return return a list of object for the target data type
+	 */
+	public static <T> T convertJsonToSinglePOJO(String jsonData, Class<T> clazz) {
+
+		List<T> data = convertJsonToPOJO(jsonData, clazz);
+		if (data.size() == 1)
+			return data.get(0);
+		else
+			return null;
 	}
 
 }

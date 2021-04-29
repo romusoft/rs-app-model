@@ -1,306 +1,155 @@
 package net.romusoft.rsapp.mvvm;
 
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
 import java.util.Hashtable;
-import java.util.List;
 
 import org.springframework.ui.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import net.romusoft.rsapp.mvvm.model.RsBasicApiContextPaths;
-import net.romusoft.rsapp.mvvm.model.RsViewModelItem;
-
 /**
+ * Describe the viewmodel for mvc/mvvm support
  * 
- * @author eromu_000
+ * @author Emmanuel Romulus
  *
+ * @param <TView> the view data type
  */
-public abstract class RsAbstractViewModel {
+public abstract class RsAbstractViewModel<TView extends IRsView> {
 
 	@JsonIgnore
 	private final String VIEWMODEL_ATTRIBUTE_NAME = "viewModel";
 	@JsonIgnore
-	private final String HTML_TITLE_ATTRIBUTE_NAME = "htmlTitle";
-	@JsonIgnore
-	private final String PAGE_TITLE_ATTRIBUTE_NAME = "pageTitle";
-	@JsonIgnore
-	private final String PAGE_TITLE_DESCRIPTION_ATTRIBUTE_NAME = "pageTitleDescription";
-	@JsonIgnore
-	private final String SCHEDULE_DATE_ATTRIBUTE_NAME = "scheduleDay";
-	@JsonIgnore
 	private Model model = null;
 
-	/*
-	 * the main header for the viewmodel similar to page title with the option of
-	 * setting more info such as cssclass, etc..
-	 */
-	private final RsViewModelItem headerInfo = new RsViewModelItem();
-
-	private String name = "";
-	private String htmlTitle;
-	private String pageTitle;
-	private String pageTitleDescription;
-	/*
-	 * api endpoints
-	 */
-	private String apiBaseUrl;
-	private String uriRead;
-	private String uriCreate;
-	private String uriUpdate;
-	private String uriDelete;
-	private String uriDetail;
-
-	//
-	//
+	private TView view;
 	private String id;
+	private String name = VIEWMODEL_ATTRIBUTE_NAME;
 	private String description;
 	//
 	// general purpose metadata
 	private final Hashtable<String, Object> metadata = new Hashtable<String, Object>();
-	//
-	// list of model items
-	private final List<RsViewModelItem> modelItems = new ArrayList<RsViewModelItem>();
 
 	/**
-	 * constructors
+	 * default constructor
 	 */
 	public RsAbstractViewModel() {
-	}
-
-	/**
-	 * 
-	 * @param name
-	 */
-	public RsAbstractViewModel(String name) {
-		this.name = name;
-	}
-
-	/**
-	 * 
-	 * @param name
-	 * @param model
-	 */
-	public RsAbstractViewModel(String name, Model model) {
-		this.name = name;
-		this.model = model;
-		if (model != null) {
-			model.addAttribute(name, this);
-		}
+		this.generateViewInstance(null);
 	}
 
 	/**
 	 * using this constructor will automatically set the view model attribute of the
 	 * model to 'viewModel' if a new name is required, use the default constructor
 	 * 
-	 * @param model
+	 * @param model spring mvc model where attributes are stored
 	 */
 	public RsAbstractViewModel(Model model) {
-		this.model = model;
-		if (model != null) {
-			model.addAttribute(VIEWMODEL_ATTRIBUTE_NAME, this);
-		}
+		setModel(model); // set model and add the current instance as an attribute
+		this.generateViewInstance(null);
 	}
 
 	/**
+	 * Constructor used to override the view in the class view declaration
 	 * 
-	 * @return
+	 * @param <NewView> override the default view in the class definition with a new
+	 *                  view
+	 * @param model     the spring mvc model
+	 * @param clazz     the target type of the view
+	 */
+	public <NewView extends IRsView> RsAbstractViewModel(Model model, Class<NewView> clazz) {
+		setModel(model); // set model and add the current instance as an attribute
+		this.generateViewInstance(clazz);
+	}
+
+	/**
+	 * the name of the view model
+	 * 
+	 * @return the name of the view model
 	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * set the name of the view model object
+	 * 
+	 * @param name the name of the view model object
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
+	 * get the spring mvc model
 	 * 
-	 * @return
+	 * @return the spring mvc model
 	 */
 	public Model getModel() {
 		return model;
 	}
 
+	/**
+	 * set the spring mvc model
+	 * 
+	 * @param model the model to be set
+	 */
 	public void setModel(Model model) {
 		this.model = model;
 		if (model != null && this.name != null && this.name.isEmpty() == false) {
 			model.addAttribute(this.name, this);
 		}
-
-	}
-	//
-	// end of constructors
-	//
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String getHtmlTitle() {
-		return htmlTitle;
-	}
-
-	public void setHtmlTitle(String htmlTitle) {
-		this.htmlTitle = htmlTitle;
-		this.addAttribute(HTML_TITLE_ATTRIBUTE_NAME, htmlTitle);
 	}
 
 	/**
+	 * the id of the view model.
 	 * 
-	 * @return
-	 */
-	public String getPageTitle() {
-		return pageTitle;
-	}
-
-	public void setPageTitle(String pageTitle) {
-		this.pageTitle = pageTitle;
-		this.addAttribute(PAGE_TITLE_ATTRIBUTE_NAME, pageTitle);
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String getPageTitleDescription() {
-		return pageTitleDescription;
-	}
-
-	public void setPageTitleDescription(String pageTitleDescription) {
-		this.pageTitleDescription = pageTitleDescription;
-		this.addAttribute(PAGE_TITLE_DESCRIPTION_ATTRIBUTE_NAME, pageTitleDescription);
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String getApiBaseUrl() {
-		return apiBaseUrl;
-	}
-
-	public void setApiBaseUrl(String apiBaseUrl) {
-		this.apiBaseUrl = apiBaseUrl;
-		this.addAttribute(RsBasicApiContextPaths.API_BASE_URL_ATTRIBUTE_NAME, apiBaseUrl);
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String getUriRead() {
-		return uriRead;
-	}
-
-	public void setUriRead(String uriRead) {
-		this.uriRead = uriRead;
-		this.addAttribute(RsBasicApiContextPaths.URI_READ_ATTRIBUTE_NAME, uriRead);
-
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String getUriCreate() {
-		return uriCreate;
-	}
-
-	public void setUriCreate(String uriCreate) {
-		this.uriCreate = uriCreate;
-		this.addAttribute(RsBasicApiContextPaths.URI_CREATE_ATTRIBUTE_NAME, uriCreate);
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String getUriUpdate() {
-		return uriUpdate;
-	}
-
-	public void setUriUpdate(String uriUpdate) {
-		this.uriUpdate = uriUpdate;
-		this.addAttribute(RsBasicApiContextPaths.URI_UPDATE_ATTRIBUTE_NAME, uriUpdate);
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String getUriDelete() {
-		return uriDelete;
-	}
-
-	public void setUriDelete(String uriDelete) {
-		this.uriDelete = uriDelete;
-		this.addAttribute(RsBasicApiContextPaths.URI_DELETE_ATTRIBUTE_NAME, uriDelete);
-
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String getUriDetail() {
-		return uriDetail;
-	}
-
-	public void setUriDetail(String uriDetail) {
-		this.uriDetail = uriDetail;
-		this.addAttribute(RsBasicApiContextPaths.URI_DETAIL_ATTRIBUTE_NAME, uriDetail);
-
-	}
-
-	/**
-	 * 
-	 * @return
+	 * @return the id of the view model
 	 */
 	public String getId() {
 		return id;
 	}
 
+	/**
+	 * set the id of the viewmodel
+	 * 
+	 * @param id the id of the viewmodel
+	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 
 	/**
+	 * a description for the view model
 	 * 
-	 * @return
+	 * @return the description the view model object
 	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * set a description for the view model
+	 * 
+	 * @param description the description to be set
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
 	/**
+	 * get the metadata for this view model
 	 * 
-	 * @return
+	 * @return the metadata for this view model
 	 */
 	public Hashtable<String, Object> getMetadata() {
 		return metadata;
 	}
 
-	public List<RsViewModelItem> getModelItems() {
-		return modelItems;
-	}
-
 	/**
+	 * add key/value pair attribute to the metadata
 	 * 
-	 * @return
-	 */
-	public RsViewModelItem getHeaderInfo() {
-		return headerInfo;
-	}
-
-	/**
-	 * 
-	 * @param name
-	 * @param value
+	 * @param name  the key to be set
+	 * @param value the value to be set
 	 */
 	public void addAttribute(String name, Object value) {
 		if (model != null) {
@@ -309,67 +158,72 @@ public abstract class RsAbstractViewModel {
 	}
 
 	/**
+	 * the view for this view model object
 	 * 
-	 * @return
+	 * @return the view for this view model object
 	 */
-	public RsViewModelItem addModelItem() {
-
-		RsViewModelItem item = new RsViewModelItem();
-		this.modelItems.add(item);
-		return item;
+	public TView getView() {
+		return view;
 	}
 
 	/**
+	 * set the view for this view model object
 	 * 
-	 * @param id
-	 * @return
+	 * @param view the view for this view model object
 	 */
-	public RsViewModelItem addModelItem(String id) {
-
-		RsViewModelItem item = new RsViewModelItem(id);
-		this.modelItems.add(item);
-		return item;
+	public void setView(TView view) {
+		this.view = view;
 	}
 
 	/**
+	 * get the html path for this view model. It comes from the view that was set
 	 * 
-	 * @param id
-	 * @param description
-	 * @return
+	 * @return the html path for the view model from the view
 	 */
-	public RsViewModelItem addModelItem(String id, String description) {
+	public String getViewPath() {
 
-		RsViewModelItem item = new RsViewModelItem(id, description);
-		this.modelItems.add(item);
-		return item;
+		return view.getHtml();
 	}
 
 	/**
-	 * 
-	 * @param id
-	 * @param description
-	 * @param modelItems
-	 * @return
+	 * Create a view instance base of the class type of the view
+	 * @param <V> the view type
+	 * @param clazz the target class type of the view
 	 */
-	public RsViewModelItem addModelItem(String id, String description, List<RsViewModelItem> targetModelItems) {
+	@SuppressWarnings("unchecked")
+	public <V extends IRsView> void generateViewInstance(Class<V> clazz) {
 
-		RsViewModelItem item = new RsViewModelItem(id, description);
-		targetModelItems.add(item);
-		return item;
+		if (clazz == null) {
+			//
+			// get the generic super type of the view, then create an instance of the view
+			clazz = (Class<V>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		}
+
+		if (clazz != null) {
+			try {
+				view = (TView) clazz.getDeclaredConstructor().newInstance();
+				view.setModel(model);
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
 	}
-
-	/**
-	 * 
-	 * @param id
-	 * @param description
-	 * @param modelItems
-	 * @return
-	 */
-	public RsViewModelItem addModelItem(String description, List<RsViewModelItem> targetModelItems) {
-
-		RsViewModelItem item = new RsViewModelItem(description);
-		targetModelItems.add(item);
-		return item;
-	}
-
 }

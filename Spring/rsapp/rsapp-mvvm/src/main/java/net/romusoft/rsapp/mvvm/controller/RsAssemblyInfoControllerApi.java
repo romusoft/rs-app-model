@@ -5,16 +5,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.romusoft.rsapp.mvvm.enums.AssemblyInfoOptions;
 import net.romusoft.rsapp.mvvm.model.RsAssemblyInfo;
 import net.romusoft.rsapp.mvvm.model.RsViewModelItem;
 
+/**
+ * api to get information about an application
+ * 
+ * @author Emmanuel Romulus
+ *
+ */
 @RestController
 @RequestMapping("api/rsapp/assembly-info")
-public class AssemblyInfoControllerApi {
+public class RsAssemblyInfoControllerApi {
 
 	@Autowired
 	private RsAssemblyInfo assemblyInfo;
 
+	/**
+	 * get information about the application
+	 * 
+	 * @param option which information to return
+	 * @return information about the application
+	 */
 	@RequestMapping
 	public RsViewModelItem getAssemblyInfoData(@RequestParam(value = "option", required = false) String option) {
 		RsViewModelItem item = new RsViewModelItem();
@@ -25,18 +38,19 @@ public class AssemblyInfoControllerApi {
 			option = option.toUpperCase();
 		}
 
-		switch (option) {
-		case "ALL":
-			item.addMetadataValue("assemblyInfo", assemblyInfo);
+		AssemblyInfoOptions targetOption = AssemblyInfoOptions.getValue(option);
+		switch (targetOption) {
+		case ALL:
+			item.addMetadataValue(targetOption.getMetadataKey(), assemblyInfo);
 			break;
-		case "VERSION":
-			item.addMetadataValue("version", assemblyInfo.getVersion());
+		case VERSION:
+			item.addMetadataValue(targetOption.getMetadataKey(), assemblyInfo.getVersion());
 			break;
-		case "ENVIRONMENT":
-			item.addMetadataValue("environment", assemblyInfo.getEnvironment());
+		case ENVIRONMENT:
+			item.addMetadataValue(targetOption.getMetadataKey(), assemblyInfo.getEnvironment());
 			break;
 		default:
-			item.addMetadataValue("default", "");
+			item.addMetadataValue(targetOption.getMetadataKey(), "");
 			break;
 		}
 

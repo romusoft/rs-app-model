@@ -4,7 +4,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * assembly info properties
- * @author eromu_000
+ * 
+ * @author Emmanuel Romulus
  *
  */
 @ConfigurationProperties(prefix = "rsapp.assemblyinfo")
@@ -50,12 +51,17 @@ public class RsAssemblyInfoProperties {
 	/**
 	 * deployment environment name of the app: staging, dev, prod, etc.
 	 * 
-	 * @return
+	 * @return the name of the environment where the application is deployed.
 	 */
 	public String getEnvironment() {
 		return environment;
 	}
 
+	/**
+	 * Set the name of the environment
+	 * 
+	 * @param environment the environment to be set
+	 */
 	public void setEnvironment(String environment) {
 		this.environment = environment;
 	}
@@ -63,12 +69,17 @@ public class RsAssemblyInfoProperties {
 	/**
 	 * version deployed to the web server
 	 * 
-	 * @return
+	 * @return the current version of the application
 	 */
 	public String getVersion() {
 		return version;
 	}
 
+	/**
+	 * set the current version of the application
+	 * 
+	 * @param version the version to be set
+	 */
 	public void setVersion(String version) {
 		this.version = version;
 	}
@@ -76,12 +87,16 @@ public class RsAssemblyInfoProperties {
 	/**
 	 * friendly or display name of the application
 	 * 
-	 * @return
+	 * @return a friendly or display name of the application
 	 */
 	public String getApplicationTitle() {
 		return applicationTitle;
 	}
 
+	/**
+	 * 
+	 * @param applicationTitle the application title to be set
+	 */
 	public void setApplicationTitle(String applicationTitle) {
 		this.applicationTitle = applicationTitle;
 	}
@@ -89,12 +104,17 @@ public class RsAssemblyInfoProperties {
 	/**
 	 * name of the application based on which the war file is created
 	 * 
-	 * @return
+	 * @return the name of the application based on which the war file is created
 	 */
 	public String getApplicationName() {
 		return applicationName;
 	}
 
+	/**
+	 * set the name of the application
+	 * 
+	 * @param applicationName the application name to be set
+	 */
 	public void setApplicationName(String applicationName) {
 		this.applicationName = applicationName;
 	}
@@ -103,12 +123,17 @@ public class RsAssemblyInfoProperties {
 	 * the directory where the appconfig.properties file is located. the
 	 * appconfig.properties file must be located there and accessible for the app to
 	 * 
-	 * @return
+	 * @return the directory path of external properties files
 	 */
 	public String getPropertyFileDirectory() {
 		return propertyFileDirectory;
 	}
 
+	/**
+	 * set the directory path of external properties files
+	 * 
+	 * @param propertyFileDirectory the property file directory to be set
+	 */
 	public void setPropertyFileDirectory(String propertyFileDirectory) {
 		this.propertyFileDirectory = propertyFileDirectory;
 	}
@@ -116,12 +141,17 @@ public class RsAssemblyInfoProperties {
 	/**
 	 * the application file name deployed on the server
 	 * 
-	 * @return
+	 * @return the application file name deployed on the server
 	 */
 	public String getApplicationFilename() {
 		return applicationFilename;
 	}
 
+	/**
+	 * set the application file name deployed on the server
+	 * 
+	 * @param applicationFilename the application file name to be set
+	 */
 	public void setApplicationFilename(String applicationFilename) {
 		this.applicationFilename = applicationFilename;
 	}
@@ -131,12 +161,17 @@ public class RsAssemblyInfoProperties {
 	 * or un-deploy the app it is the name of the module seen on a weblogic server
 	 * after an app is deployed
 	 * 
-	 * @return
+	 * @return the application title
 	 */
 	public String getApplicationFileTitle() {
 		return applicationFileTitle;
 	}
 
+	/**
+	 * set the application title
+	 * 
+	 * @param applicationFileTitle the application file title to be set
+	 */
 	public void setApplicationFileTitle(String applicationFileTitle) {
 		this.applicationFileTitle = applicationFileTitle;
 	}

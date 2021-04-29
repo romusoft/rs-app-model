@@ -24,7 +24,7 @@ import net.romusoft.rsapp.mvvm.RsAbstractViewModelItem;
 /**
  * business object or item in a view model
  * 
- * @author romulus
+ * @author Emmanuel Romulus
  *
  */
 public class RsViewModelItem extends RsAbstractViewModelItem {
@@ -33,42 +33,64 @@ public class RsViewModelItem extends RsAbstractViewModelItem {
 	private String comment;
 
 	/**
-	 * 
+	 * default constructor
 	 */
 	public RsViewModelItem() {
 		super();
 	}
 
+	/**
+	 * Initialize with email address
+	 * 
+	 * @param emailAddress email address for the object
+	 */
 	public RsViewModelItem(String emailAddress) {
 		super();
 		this.emailAddress = emailAddress;
 	}
 
+	/**
+	 * Initialize with object id and email address
+	 * 
+	 * @param id           object id
+	 * @param emailAddress email address for the object
+	 */
 	public RsViewModelItem(String id, String emailAddress) {
 		super();
 		this.emailAddress = emailAddress;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * emailAddress for the object
+	 * @return emailAddress for the object
 	 */
 	public String getEmailAddress() {
 		return emailAddress;
 	}
 
+	/**
+	 * emailAddress for the object
+	 * 
+	 * @param emailAddress emailAddress for the object
+	 */
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
 
 	/**
+	 * comment for the object
 	 * 
-	 * @return
+	 * @return comment for the object
 	 */
 	public String getComment() {
 		return comment;
 	}
 
+	/**
+	 * comment for the object
+	 * 
+	 * @param comment comment for the object
+	 */
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
@@ -76,9 +98,9 @@ public class RsViewModelItem extends RsAbstractViewModelItem {
 	/**
 	 * Mapped json objects to pojos using the target RsViewModelItem
 	 * 
-	 * @param jsonData
+	 * @param jsonData json string to convert
 	 * @author romulus
-	 * @return
+	 * @return an RsViewModelItem
 	 */
 	public static RsViewModelItem convertJsonToPOJO(String jsonData) {
 		List<RsViewModelItem> items = RsViewModelItem.convertJsonToPOJOs(jsonData);
@@ -91,9 +113,9 @@ public class RsViewModelItem extends RsAbstractViewModelItem {
 	/**
 	 * Mapped json objects to pojos using the target RsViewModelItems
 	 * 
-	 * @param jsonData
+	 * @param jsonData json string to convert
 	 * @author romulus
-	 * @return
+	 * @return list of RsViewModelItem
 	 */
 	public static List<RsViewModelItem> convertJsonToPOJOs(String jsonData) {
 		//

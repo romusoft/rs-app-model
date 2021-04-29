@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import net.romusoft.rsapp.mvvm.DefaultViewModel;
+import net.romusoft.rsapp.mvvm.model.RsDefaultViewModel;
 
 @Controller
 public class ActivityController {
@@ -12,7 +12,7 @@ public class ActivityController {
 	@GetMapping("activity-list")
 	public String activityList(Model model) {
 
-		DefaultViewModel viewModel = new DefaultViewModel(model, VActivityList.class);
+		RsDefaultViewModel viewModel = new RsDefaultViewModel(model, VActivityList.class);
 		return viewModel.getViewPath();
 
 	}

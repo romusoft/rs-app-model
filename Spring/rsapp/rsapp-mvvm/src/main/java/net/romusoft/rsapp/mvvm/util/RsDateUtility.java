@@ -10,11 +10,19 @@ import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ * 
+ * @author eromu_000
+ *
+ */
 public class RsDateUtility {
 	/**
 	 * pacific time
 	 */
 	public static final String GMT_PLUS_7 = "Etc/GMT+7";
+	/**
+	 * 
+	 */
 	public static final String LOS_ANGELES = "America/Los_Angeles"; // pacific
 	/**
 	 * mountain time
@@ -29,7 +37,13 @@ public class RsDateUtility {
 	 */
 	public static final String NEW_YORK = "America/New_York"; // eastern
 
-	static public java.sql.Date convertUtilDateToSQLDate(java.util.Date dateToConvert) {
+	/**
+	 * convert a java.util date to a java.sql date
+	 * 
+	 * @param dateToConvert java.util date
+	 * @return java.sql date
+	 */
+	public static java.sql.Date convertUtilDateToSQLDate(java.util.Date dateToConvert) {
 		java.sql.Date convertedDate = null;
 		if (dateToConvert != null) {
 			java.util.Calendar cal = Calendar.getInstance();
@@ -43,7 +57,14 @@ public class RsDateUtility {
 		return convertedDate;
 	}
 
-	static public int compareDatesByMonthDayAndYear(Date firstDate, Date secondDate) {
+	/**
+	 * compare date strings by month, day, and year
+	 * 
+	 * @param firstDate  first date
+	 * @param secondDate second date
+	 * @return int value such as: 1,0,-1
+	 */
+	public static int compareDatesByMonthDayAndYear(Date firstDate, Date secondDate) {
 		// Handle cases where one of the dates is null
 		if (firstDate == null) {
 			if (secondDate == null) {
@@ -70,7 +91,14 @@ public class RsDateUtility {
 		}
 	}
 
-	static public int compareDatesByMonthDayAndYear(String firstDateString, String secondDateString) {
+	/**
+	 * compare dates by month, day, and year
+	 * 
+	 * @param firstDateString  first date
+	 * @param secondDateString second date
+	 * @return int value such as: 1,0,-1
+	 */
+	public static int compareDatesByMonthDayAndYear(String firstDateString, String secondDateString) {
 		// Handle cases where one of the dates is null
 		if (firstDateString == null || firstDateString.equals("")) {
 			if (secondDateString == null || secondDateString.equals("")) {
@@ -88,7 +116,14 @@ public class RsDateUtility {
 		return compareDatesByMonthDayAndYear(firstDate, secondDate);
 	}
 
-	static public int compareDatesByTimestamp(Date firstDate, Date secondDate) {
+	/**
+	 * compare dates by timestamps
+	 * 
+	 * @param firstDate  first date
+	 * @param secondDate second date
+	 * @return int value such as: 1,0,-1
+	 */
+	public static int compareDatesByTimestamp(Date firstDate, Date secondDate) {
 		// Handle cases where one of the dates is null
 		if (firstDate == null) {
 			if (secondDate == null) {
@@ -111,12 +146,18 @@ public class RsDateUtility {
 		}
 	}
 
-	static public Date getDateFromString(String dateString) {
+	/**
+	 * get a date from string
+	 * 
+	 * @param dateString the string to parse
+	 * @return a new date object
+	 */
+	public static Date getDateFromString(String dateString) {
 		Date newDate = null;
 
 		if (dateString != null && !dateString.equals("")) {
 			try {
-				SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy"); //yyyy-mm-dd 06/12/2015
+				SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy"); // yyyy-mm-dd 06/12/2015
 				java.util.Date tempDate = dateFormat.parse(dateString);
 				newDate = new Date(tempDate.getTime());
 			} catch (Exception e) {
@@ -126,13 +167,20 @@ public class RsDateUtility {
 
 		return newDate;
 	}
-	
-	static public Calendar getCalendarFromString(String dateString, SimpleDateFormat dateFormat) {
+
+	/**
+	 * get a calendar from string based on a dateformat
+	 * 
+	 * @param dateString date string
+	 * @param dateFormat date format
+	 * @return calendar
+	 */
+	public static Calendar getCalendarFromString(String dateString, SimpleDateFormat dateFormat) {
 		Calendar tempCalendar = null;
 		dateFormat.setLenient(false);
 
 		if (dateString != null && !dateString.equals("")) {
-			java.util.Date parsedDate=null;
+			java.util.Date parsedDate = null;
 			try {
 				parsedDate = dateFormat.parse(dateString);
 				tempCalendar = Calendar.getInstance();
@@ -142,12 +190,19 @@ public class RsDateUtility {
 				e.printStackTrace();
 			}
 		}
-		Calendar cal = new GregorianCalendar(tempCalendar.get(Calendar.YEAR), tempCalendar.get(Calendar.MONTH), tempCalendar.get(Calendar.DAY_OF_MONTH));
+		Calendar cal = new GregorianCalendar(tempCalendar.get(Calendar.YEAR), tempCalendar.get(Calendar.MONTH),
+				tempCalendar.get(Calendar.DAY_OF_MONTH));
 		System.out.println(cal.toString());
 		return cal;
 	}
 
-	static public Date getDateFromSQLString(String dateString) {
+	/**
+	 * parse an sql string date - dd-MMM-yyyy
+	 * 
+	 * @param dateString date string
+	 * @return date
+	 */
+	public static Date getDateFromSQLString(String dateString) {
 		Date newDate = null;
 
 		if (dateString != null && !dateString.equals("")) {
@@ -163,7 +218,13 @@ public class RsDateUtility {
 		return newDate;
 	}
 
-	static public boolean isValidDateString(String dateString) {
+	/**
+	 * whether a date string is valid
+	 * 
+	 * @param dateString date string
+	 * @return whether a date string is valid
+	 */
+	public static boolean isValidDateString(String dateString) {
 		boolean isValidDate = true;
 
 		if (dateString != null) {
@@ -181,7 +242,13 @@ public class RsDateUtility {
 		return isValidDate;
 	}
 
-	static public boolean isValidDateStringIgnoreNull(String dateString) {
+	/**
+	 * whether a date string is valid
+	 * 
+	 * @param dateString date string
+	 * @return whether a date string is valid
+	 */
+	public static boolean isValidDateStringIgnoreNull(String dateString) {
 		if (dateString == null || dateString.equals("")) {
 			return true;
 		} else {
@@ -189,7 +256,13 @@ public class RsDateUtility {
 		}
 	}
 
-	static public String renderDateAsSortableString(Date date) {
+	/**
+	 * date formatted as yyyy/MM/dd
+	 * 
+	 * @param date date
+	 * @return date formatted as yyyy/MM/dd
+	 */
+	public static String renderDateAsSortableString(Date date) {
 		if (date == null) {
 			return "";
 		} else {
@@ -198,7 +271,13 @@ public class RsDateUtility {
 		}
 	}
 
-	static public String renderDateAsSqlDateString(Date date) {
+	/**
+	 * date formatted as dd-MMM-yyyy
+	 * 
+	 * @param date date
+	 * @return date formatted as dd-MMM-yyyy
+	 */
+	public static String renderDateAsSqlDateString(Date date) {
 		if (date == null) {
 			return "";
 		}
@@ -209,7 +288,13 @@ public class RsDateUtility {
 
 	}
 
-	static public String renderDateAsString(Date date) {
+	/**
+	 * date formatted as MM/dd/yyyy
+	 * 
+	 * @param date date
+	 * @return date formatted as MM/dd/yyyy
+	 */
+	public static String renderDateAsString(Date date) {
 		if (date == null) {
 			return "";
 		} else {
@@ -218,7 +303,13 @@ public class RsDateUtility {
 		}
 	}
 
-	static public String renderDateAsStringWithDashes(Date date) {
+	/**
+	 * date formatted as MM-dd-yyyy
+	 * 
+	 * @param date date
+	 * @return date formatted as MM-dd-yyyy
+	 */
+	public static String renderDateAsStringWithDashes(Date date) {
 		if (date == null) {
 			return "";
 		} else {
@@ -227,7 +318,13 @@ public class RsDateUtility {
 		}
 	}
 
-	static public String renderDateAsStringWithHoursAndMinutes(Timestamp date) {
+	/**
+	 * date formatted as MM/dd/yyyy hh:mm:ss a
+	 * 
+	 * @param date date
+	 * @return date formatted as MM/dd/yyyy hh:mm:ss a
+	 */
+	public static String renderDateAsStringWithHoursAndMinutes(Timestamp date) {
 		if (date == null) {
 			return "";
 		} else {
@@ -236,7 +333,13 @@ public class RsDateUtility {
 		}
 	}
 
-	static public Date getPreviousDate(Date currentDate) {
+	/**
+	 * get previous date
+	 * 
+	 * @param currentDate current date
+	 * @return date
+	 */
+	public static Date getPreviousDate(Date currentDate) {
 		// Use the Calendar class to subtract one day
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(currentDate);
@@ -246,7 +349,13 @@ public class RsDateUtility {
 		return previousDate;
 	}
 
-	static public Date getNextDate(Date currentDate) {
+	/**
+	 * get next date
+	 * 
+	 * @param currentDate current date
+	 * @return date
+	 */
+	public static Date getNextDate(Date currentDate) {
 		// Use the Calendar class to add one day
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(currentDate);
@@ -256,6 +365,13 @@ public class RsDateUtility {
 		return nextDate;
 	}
 
+	/**
+	 * whether two dates are equal
+	 * 
+	 * @param firstDate  first date
+	 * @param secondDate second date
+	 * @return whether two dates are equal
+	 */
 	public static boolean datesAreEqual(Date firstDate, Date secondDate) {
 		Calendar firstCalendar = Calendar.getInstance();
 		firstCalendar.setTime(firstDate);
@@ -272,7 +388,14 @@ public class RsDateUtility {
 		}
 	}
 
-	public static boolean isDateXDaysOrMoreInFuture(Date testDate, int numDays) {
+	/**
+	 * Whether a number of days for a date is in the future
+	 * 
+	 * @param testDate target date
+	 * @param numDays  number of days
+	 * @return whether a number of days for a date is in the future
+	 */
+	static public boolean isDateXDaysOrMoreInFuture(Date testDate, int numDays) {
 		if (numDays < 1) {
 			throw new RuntimeException(
 					"The value of numDays passed to DateUtil.isDateXDaysOrMoreInFuture() must be greater than 0.");
@@ -297,6 +420,13 @@ public class RsDateUtility {
 		}
 	}
 
+	/**
+	 * Whether a number of days for a date is in the past
+	 * 
+	 * @param testDate target date
+	 * @param numDays  number of days
+	 * @return whether a number of days for a date is in the past
+	 */
 	public static boolean isDateXDaysOrMoreInPast(Date testDate, int numDays) {
 		if (numDays < 1) {
 			throw new RuntimeException(
@@ -325,9 +455,9 @@ public class RsDateUtility {
 	/**
 	 * convert to ZonedDateTime a target time zone
 	 * 
-	 * @param zonedDateTime
-	 * @param targetZoneId
-	 * @return
+	 * @param zonedDateTime zoneddatetime
+	 * @param targetZoneId  zone id
+	 * @return zoneddatetime
 	 */
 	public static ZonedDateTime convertToTimeZone(ZonedDateTime zonedDateTime, ZoneId targetZoneId) {
 		/*
@@ -341,9 +471,9 @@ public class RsDateUtility {
 	/**
 	 * convert to ZonedDateTime a target time zone
 	 * 
-	 * @param zonedDateTime
-	 * @param targetZoneId
-	 * @return
+	 * @param zonedDateTime  zoneddatetime
+	 * @param targetZoneName target zone name
+	 * @return zoneddatetime
 	 */
 	public static ZonedDateTime convertToTimeZone(ZonedDateTime zonedDateTime, String targetZoneName) {
 		/*
@@ -354,19 +484,17 @@ public class RsDateUtility {
 		ZonedDateTime datetime = instant.atZone(targetZoneId);
 		return datetime;
 	}
-	
+
 	/**
-	 * convert to calendar a target time zone
+	 * convert o calendar to a target time zone
 	 * 
-	 * @param calendar
-	 * @param targetZoneId
-	 * @return
+	 * @param calendar calendar
+	 * @return zoneddatetime
 	 */
 	public static ZonedDateTime convertToTimeZone(Calendar calendar) {
 
 		ZoneId tempZoneId = calendar.getTimeZone().toZoneId();
-		ZonedDateTime zonedDateTime = ZonedDateTime
-				.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1,
+		ZonedDateTime zonedDateTime = ZonedDateTime.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1,
 				calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE),
 				calendar.get(Calendar.SECOND), 0, tempZoneId);
 		/*
@@ -378,11 +506,11 @@ public class RsDateUtility {
 	}
 
 	/**
-	 * convert to calendar a target time zone
+	 * convert o calendar to a target time zone
 	 * 
-	 * @param calendar
-	 * @param targetZoneId
-	 * @return
+	 * @param calendar     calendar
+	 * @param targetZoneId target zone id
+	 * @return zoneddatetime
 	 */
 	public static ZonedDateTime convertToTimeZone(Calendar calendar, ZoneId targetZoneId) {
 
@@ -399,11 +527,11 @@ public class RsDateUtility {
 	}
 
 	/**
-	 * convert to calendar a target time zone
+	 * convert a calendar to a target time zone
 	 * 
-	 * @param calendar
-	 * @param targetZoneId
-	 * @return
+	 * @param calendar       calendar
+	 * @param targetZoneName target zone name
+	 * @return zoneddatetime object
 	 */
 	public static ZonedDateTime convertToTimeZone(Calendar calendar, String targetZoneName) {
 
@@ -426,9 +554,10 @@ public class RsDateUtility {
 	}
 
 	/**
+	 * convert to pacific time
 	 * 
-	 * @param zonedDateTime
-	 * @return
+	 * @param zonedDateTime zoneddatetime
+	 * @return zoneddatetime
 	 */
 	public static ZonedDateTime convertToPacificTime(ZonedDateTime zonedDateTime) {
 
@@ -437,9 +566,10 @@ public class RsDateUtility {
 	}
 
 	/**
+	 * convert to pacific time
 	 * 
-	 * @param calendar
-	 * @return
+	 * @param calendar calendar
+	 * @return zoneddatetime
 	 */
 	public static ZonedDateTime convertToPacificTime(Calendar calendar) {
 		/*
@@ -450,9 +580,10 @@ public class RsDateUtility {
 	}
 
 	/**
+	 * convert to mountain time
 	 * 
-	 * @param zonedDateTime
-	 * @return
+	 * @param zonedDateTime zoned date time
+	 * @return zoneddatetime
 	 */
 	public static ZonedDateTime convertToMountainTime(ZonedDateTime zonedDateTime) {
 
@@ -461,9 +592,10 @@ public class RsDateUtility {
 	}
 
 	/**
+	 * convert to mountain time
 	 * 
-	 * @param calendar
-	 * @return
+	 * @param calendar calendar
+	 * @return zoneddatetime
 	 */
 	public static ZonedDateTime convertToMountainTime(Calendar calendar) {
 		ZoneId zoneId = ZoneId.of(DENVER);
@@ -471,9 +603,10 @@ public class RsDateUtility {
 	}
 
 	/**
+	 * convert to central time
 	 * 
-	 * @param zonedDateTime
-	 * @return
+	 * @param zonedDateTime zoneddatetime
+	 * @return zoneddatetime
 	 */
 	public static ZonedDateTime convertToCentralTime(ZonedDateTime zonedDateTime) {
 
@@ -482,9 +615,10 @@ public class RsDateUtility {
 	}
 
 	/**
+	 * convert to central time
 	 * 
-	 * @param calendar
-	 * @return
+	 * @param calendar calendar
+	 * @return zoneddatetime
 	 */
 	public static ZonedDateTime convertToCentralTime(Calendar calendar) {
 		ZoneId zoneId = ZoneId.of(RANKIN_INLET);
@@ -493,8 +627,10 @@ public class RsDateUtility {
 
 	/**
 	 * 
-	 * @param zonedDateTime
-	 * @return
+	 * convert zoneddatetime to eastern time zone date time
+	 * 
+	 * @param zonedDateTime zoneddatetime
+	 * @return zoneddatetime
 	 */
 	public static ZonedDateTime convertToEasternTime(ZonedDateTime zonedDateTime) {
 
@@ -503,9 +639,10 @@ public class RsDateUtility {
 	}
 
 	/**
+	 * convert calendar to eastern time zone date time
 	 * 
-	 * @param calendar
-	 * @return
+	 * @param calendar the calendar to convert
+	 * @return zoneddatetime
 	 */
 	public static ZonedDateTime convertToEasternTime(Calendar calendar) {
 		ZoneId zoneId = ZoneId.of(NEW_YORK);

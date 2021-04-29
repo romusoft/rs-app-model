@@ -14,7 +14,7 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import net.romusoft.rsapp.mvvm.io.DTORepositoryUtil;
+import net.romusoft.rsapp.mvvm.io.RsDTORepositoryUtil;
 import net.romusoft.rsapp.mvvm.model.RsTokenInfo;
 
 /**
@@ -59,7 +59,7 @@ public class AADB2COidcAuthorizationCodeComponent {
 				String.class);
 		String jsonData = response.getBody();
 
-		RsTokenInfo info = DTORepositoryUtil.convertJsonToPOJO(jsonData, RsTokenInfo.class).get(0);
+		RsTokenInfo info = RsDTORepositoryUtil.convertJsonToPOJO(jsonData, RsTokenInfo.class).get(0);
 		System.out.println("Access Token Response ------------------------ " + info.getId_token());
 		return info;
 	}

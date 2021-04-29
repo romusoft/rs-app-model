@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 /**
  * View to use in a view Model
  * 
- * @author eromu_000
+ * @author Emmanuel Romulus
  *
  */
 public abstract class RsAbstractView implements IRsView {
@@ -67,20 +67,33 @@ public abstract class RsAbstractView implements IRsView {
 	private String uriDelete = "";
 	private String uriDetail = "";
 
+	/**
+	 * default constructor
+	 */
 	public RsAbstractView() {
 		initialize(null);
 	}
 
+	/**
+	 *  constructor with the spring mvc model where model attribute can be stored
+	 * @param model spring mvc model where model attribute can be stored
+	 */
 	public RsAbstractView(Model model) {
 		initialize(model);
 	}
 
 	/************************************************************/
+	/**
+	 * 
+	 */
 	@Override
 	public Model getModel() {
 		return model;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void setModel(Model model) {
 		this.model = model;
@@ -88,42 +101,81 @@ public abstract class RsAbstractView implements IRsView {
 
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public abstract String getHtml();
 
+	/**
+	 * 
+	 */
 	@Override
 	public abstract String getCss();
 
+	/**
+	 * 
+	 */
 	@Override
 	public abstract String getJs();
 
+	/**
+	 * 
+	 */
 	@Override
 	public abstract String getNavigationUrl();
 
+	/**
+	 * 
+	 */
 	@Override
 	public abstract String getHtmlTitle();
 
+	/**
+	 * 
+	 */
 	@Override
 	public abstract String getPageTitle();
 
+	/**
+	 * 
+	 */
 	@Override
 	public abstract String getPageTitleDescription();
 
+	/**
+	 * 
+	 */
 	@Override
 	public abstract String getApiBaseUrl();
 
+	/**
+	 * 
+	 */
 	@Override
 	public abstract String getUriRead();
 
+	/**
+	 * 
+	 */
 	@Override
 	public abstract String getUriCreate();
 
+	/**
+	 * 
+	 */
 	@Override
 	public abstract String getUriUpdate();
 
+	/**
+	 * 
+	 */
 	@Override
 	public abstract String getUriDelete();
 
+	/**
+	 * 
+	 */
 	@Override
 	public abstract String getUriDetail();
 

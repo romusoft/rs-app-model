@@ -2,7 +2,7 @@ package net.romusoft.rsapp.mvvm;
 
 /**
  * used to identify controllers that supported by controller advice
- * @author eromu_000
+ * @author Emmanuel Romulus
  *
  */
 public abstract class RsAbstractUIController extends RsAbstractController{

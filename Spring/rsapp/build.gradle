@@ -48,7 +48,7 @@ allprojects {
   		//	archiveClassifier = "sources"
 		//}
 		java {
-    		//withJavadocJar()
+    		withJavadocJar()
     		withSourcesJar()
 		}
     	// publishing

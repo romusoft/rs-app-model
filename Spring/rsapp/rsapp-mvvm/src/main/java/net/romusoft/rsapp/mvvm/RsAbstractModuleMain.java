@@ -8,10 +8,10 @@ import net.romusoft.rsapp.mvvm.model.RsNotificationMessage;
 /**
  * implementation of the IRsModuleMain.
  * 
- * @Note onNotify method should be implemented in client class to receive
- *       notification.
+ * Note: onNotify method should be implemented in client class to receive
+ * notification.
  * 
- * @author eromu_000
+ * @author Emmanuel Romulus
  *
  */
 public abstract class RsAbstractModuleMain implements IRsModuleMain {
@@ -21,7 +21,7 @@ public abstract class RsAbstractModuleMain implements IRsModuleMain {
 	private final List<IRsModule> registeredModules = new ArrayList<IRsModule>();
 
 	/**
-	 * notify modules of a message. They pick it up with their onNotify method
+	 * 
 	 */
 	@Override
 	public void notify(RsNotificationMessage message) {

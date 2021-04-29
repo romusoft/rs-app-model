@@ -45,18 +45,18 @@ import net.romusoft.rsapp.mvvm.util.RsGeneralUtilities;
 /**
  * Used for supporting a flat dto object objects
  * 
- * @author romulus
+ * @author Emmanuel Romulus
  *
- */
-
+ **/
 @Repository
-public class DTORepositoryUtil {
+public class RsDTORepositoryUtil {
 	/**
 	 * Mapped json objects to pojos using the target class
 	 * 
-	 * @param jsonData
-	 * @author romulus
-	 * @return
+	 * @param <T>      the target data type to return
+	 * @param jsonData jsonData the json string to convert
+	 * @param clazz    the target data type to return
+	 * @return a list of records for the target data type
 	 */
 	public static <T> List<T> convertJsonToPOJO(String jsonData, Class<T> clazz) {
 		//

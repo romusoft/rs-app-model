@@ -10,8 +10,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+/**
+ * configuration to that provides localization or languages that can be used in
+ * an application
+ * 
+ * @author Emmanuel Romulus
+ *
+ */
 @Configuration
-public class LocalizationConfig implements WebMvcConfigurer {
+public class RsLocalizationConfig implements WebMvcConfigurer {
+
+	/**
+	 * default locale US
+	 * 
+	 * @return LocaleResolver object
+	 */
 	@Bean
 	public LocaleResolver xlocaleResolver() {
 		SessionLocaleResolver slr = new SessionLocaleResolver();
@@ -19,6 +32,11 @@ public class LocalizationConfig implements WebMvcConfigurer {
 		return slr;
 	}
 
+	/**
+	 * bean for locale changed. The parameter is lang
+	 * 
+	 * @return LocaleChangeInterceptor object
+	 */
 	@Bean
 	public LocaleChangeInterceptor xlocaleChangeInterceptor() {
 		LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
@@ -26,6 +44,9 @@ public class LocalizationConfig implements WebMvcConfigurer {
 		return lci;
 	}
 
+	/**
+	 * set the locale changed interceptor
+	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(xlocaleChangeInterceptor());

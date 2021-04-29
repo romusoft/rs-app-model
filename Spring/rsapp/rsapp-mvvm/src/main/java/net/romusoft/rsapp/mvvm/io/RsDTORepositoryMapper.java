@@ -23,6 +23,7 @@
  *
  ***********************************************************************************************/
 package net.romusoft.rsapp.mvvm.io;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +31,10 @@ import java.util.List;
  * Used to bind columns to properties. Properties can be json or class
  * properties
  * 
- * @author romulus
+ * @author Emmanuel Romulus
  *
  */
-public class DTORepositoryMapper {
+public class RsDTORepositoryMapper {
 
 	public final static String STRING_TYPE = "string";
 	public final static String ARRAY_TYPE = "array";
@@ -42,23 +43,27 @@ public class DTORepositoryMapper {
 	public final static String BOOLEAN_1_0_TYPE = "1_0";
 	public final static String BOOLEAN_T_F_TYPE = "t_f";
 	public final static String BOOLEAN_TRUE_FALSE_TYPE = "true_false";
+	public final static String METADATA_FIELD = "metadata_field";
 
-	private List<DTORepositoryPropertyInfo> propertyInfos = new ArrayList<DTORepositoryPropertyInfo>();
+	private List<RsDTORepositoryPropertyInfo> propertyInfos = new ArrayList<RsDTORepositoryPropertyInfo>();
 
 	/**
+	 * the list of property infos
 	 * 
-	 * @return
+	 * @return the list of property infos
 	 */
-	public List<DTORepositoryPropertyInfo> getPropertyInfos() {
+	public List<RsDTORepositoryPropertyInfo> getPropertyInfos() {
 		return propertyInfos;
 	}
 
 	/**
 	 * Add property column mapper in the order the query will return the data
 	 * 
-	 * @param propertyInfo
+	 * @param propertyInfo property to add
+	 * 
+	 * @return whether add was successful
 	 */
-	public boolean add(DTORepositoryPropertyInfo propertyInfo) {
+	public boolean add(RsDTORepositoryPropertyInfo propertyInfo) {
 		/*
 		 * add a valid column duplicate column name is not allowed
 		 */
@@ -72,11 +77,12 @@ public class DTORepositoryMapper {
 	}
 
 	/**
+	 * get a property info object
 	 * 
-	 * @param index
-	 * @return
+	 * @param index the index at which to retrieve the record
+	 * @return target property info object
 	 */
-	public DTORepositoryPropertyInfo get(int index) {
+	public RsDTORepositoryPropertyInfo get(int index) {
 
 		int size = size();
 		if (size > 0 && size > index)
@@ -88,15 +94,15 @@ public class DTORepositoryMapper {
 	/**
 	 * valid the property
 	 * 
-	 * @param info
-	 * @return
+	 * @param info property info to validate
+	 * @return whether the property info is valid
 	 */
-	private boolean validatePropertyInfo(DTORepositoryPropertyInfo info) {
+	private boolean validatePropertyInfo(RsDTORepositoryPropertyInfo info) {
 
 		if (info == null || info.getPropertyName() == null || info.getPropertyName().isEmpty())
 			return false;
 
-		for (DTORepositoryPropertyInfo temp : propertyInfos) {
+		for (RsDTORepositoryPropertyInfo temp : propertyInfos) {
 			if (temp.getPropertyName().equals(info.getPropertyName())) {
 				return false;
 			}
@@ -109,7 +115,7 @@ public class DTORepositoryMapper {
 	/**
 	 * return size of the list of property infos
 	 * 
-	 * @return
+	 * @return the size of the property info list
 	 */
 	public int size() {
 		return propertyInfos.size();

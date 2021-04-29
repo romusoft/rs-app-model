@@ -11,8 +11,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * This class supports native sql persistence with the current entitymanager
  * 
- * @author Romulus
+ * @author Emmanuel Romulus
  *
  */
 @Repository
@@ -23,12 +24,13 @@ public class RsApplicationRepository {
 	private EntityManager entityManager;
 
 	/**
+	 * Find all records
 	 * 
-	 * @param <T>
-	 * @param nativeSqlString
-	 * @param clazz
-	 * @return
-	 * @throws Exception
+	 * @param <T>             the target type to return
+	 * @param nativeSqlString the native query to execute to retrieve the data
+	 * @param clazz           the target data type to return the list in
+	 * @return a list of T data
+	 * @throws Exception exception to be thrown if any
 	 */
 	public <T> List<T> findAll(String nativeSqlString, Class<T> clazz) throws Exception {
 
@@ -36,13 +38,14 @@ public class RsApplicationRepository {
 	}
 
 	/**
+	 * find all
 	 * 
-	 * @param <T>
-	 * @param nativeSqlString
-	 * @param parameterMap
-	 * @param clazz
-	 * @return
-	 * @throws Exception
+	 * @param <T>             the target type to return
+	 * @param nativeSqlString the native query to execute to retrieve the data
+	 * @param parameterMap    parameter list
+	 * @param clazz           the target data type to return the list in
+	 * @return a list of T data
+	 * @throws Exception Exception exception to be thrown if any
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> List<T> findAll(String nativeSqlString, Map<String, Object> parameterMap, Class<T> clazz)
@@ -70,25 +73,27 @@ public class RsApplicationRepository {
 	}
 
 	/**
+	 * find one record
 	 * 
-	 * @param <T>
-	 * @param nativeSqlString
-	 * @param clazz
-	 * @return
-	 * @throws Exception
+	 * @param <T>             the target type to return
+	 * @param nativeSqlString the native query to execute to retrieve the data
+	 * @param clazz           the target data type to return the list in
+	 * @return a list of T data
+	 * @throws Exception Exception exception to be thrown if any
 	 */
 	public <T> T findOne(String nativeSqlString, Class<T> clazz) throws Exception {
 		return findOne(nativeSqlString, null, clazz);
 	}
 
 	/**
+	 * find one record using parameters
 	 * 
-	 * @param <T>
-	 * @param nativeSqlString
-	 * @param parameterMap
-	 * @param clazz
-	 * @return
-	 * @throws Exception
+	 * @param <T>             the target type to return
+	 * @param nativeSqlString the native query to execute to retrieve the data
+	 * @param parameterMap    parameter list
+	 * @param clazz           the target data type to return the list in
+	 * @return a list of T data
+	 * @throws Exception Exception exception to be thrown if any
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T findOne(String nativeSqlString, Map<String, Object> parameterMap, Class<T> clazz) throws Exception {
@@ -114,18 +119,28 @@ public class RsApplicationRepository {
 		return data;
 	}
 
+	/**
+	 * find a scalar value
+	 * 
+	 * @param <T>             the target type to return
+	 * @param nativeSqlString the native query to execute to retrieve the data
+	 * @param clazz           the target data type to return the list in
+	 * @return a list of T data
+	 * @throws Exception Exception exception to be thrown if any
+	 */
 	public <T> T findScalarValue(String nativeSqlString, Class<T> clazz) throws Exception {
 		return findScalarValue(nativeSqlString, null, clazz);
 	}
 
 	/**
+	 * find a scalar value using parameters
 	 * 
-	 * @param <T>
-	 * @param nativeSqlString
-	 * @param parameterMap
-	 * @param clazz
-	 * @return
-	 * @throws Exception
+	 * @param <T>             the target type to return
+	 * @param nativeSqlString the native query to execute to retrieve the data
+	 * @param parameterMap    parameter list
+	 * @param clazz           the target data type to return the list in
+	 * @return a list of T data
+	 * @throws Exception Exception exception to be thrown if any
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T findScalarValue(String nativeSqlString, Map<String, Object> parameterMap, Class<T> clazz)
@@ -153,11 +168,12 @@ public class RsApplicationRepository {
 	}
 
 	/**
+	 * save a given entity
 	 * 
-	 * @param <T>
-	 * @param entity
-	 * @return
-	 * @throws Exception
+	 * @param <T>    the target type to return
+	 * @param entity the entity to save
+	 * @return a list of T data
+	 * @throws Exception Exception exception to be thrown if any
 	 */
 	public <T> T save(T entity) throws Exception {
 
@@ -172,10 +188,11 @@ public class RsApplicationRepository {
 	}
 
 	/**
+	 * delete a give entity
 	 * 
-	 * @param <T>
-	 * @param entity
-	 * @throws Exception
+	 * @param <T>    the target type to return
+	 * @param entity the entity to delete
+	 * @throws Exception Exception exception to be thrown if any
 	 */
 	public <T> void delete(T entity) throws Exception {
 
