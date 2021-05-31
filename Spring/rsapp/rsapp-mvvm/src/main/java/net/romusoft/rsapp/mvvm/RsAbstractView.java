@@ -2,6 +2,8 @@ package net.romusoft.rsapp.mvvm;
 
 import org.springframework.ui.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * View to use in a view Model
  * 
@@ -9,7 +11,6 @@ import org.springframework.ui.Model;
  *
  */
 public abstract class RsAbstractView implements IRsView {
-	private Model model = null;
 	public static final String HTML_TITLE_ATTRIBUTE_NAME = "htmlTitle";
 	public static final String PAGE_TITLE_ATTRIBUTE_NAME = "pageTitle";
 	public static final String PAGE_TITLE_DESCRIPTION_ATTRIBUTE_NAME = "pageTitleDescription";
@@ -46,10 +47,15 @@ public abstract class RsAbstractView implements IRsView {
 	public static final String API_DETAIL = "detail";
 	public static final String API_LIST = "list";
 
+	@JsonIgnore
+	private Model model = null;
 	//
 	// file paths
+	@JsonIgnore
 	private String html = "";
+	@JsonIgnore
 	private String css = "";
+	@JsonIgnore
 	private String js = "";
 
 	private String htmlTitle = "";

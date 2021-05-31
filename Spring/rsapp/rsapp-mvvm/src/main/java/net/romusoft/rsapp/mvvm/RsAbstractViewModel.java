@@ -19,9 +19,9 @@ public abstract class RsAbstractViewModel<TView extends IRsView> {
 
 	@JsonIgnore
 	private final String VIEWMODEL_ATTRIBUTE_NAME = "viewModel";
+	
 	@JsonIgnore
 	private Model model = null;
-
 	private TView view;
 	private String id;
 	private String name = VIEWMODEL_ATTRIBUTE_NAME;
@@ -180,6 +180,8 @@ public abstract class RsAbstractViewModel<TView extends IRsView> {
 	 * 
 	 * @return the html path for the view model from the view
 	 */
+
+	@JsonIgnore
 	public String getViewPath() {
 
 		return view.getHtml();
@@ -187,7 +189,8 @@ public abstract class RsAbstractViewModel<TView extends IRsView> {
 
 	/**
 	 * Create a view instance base of the class type of the view
-	 * @param <V> the view type
+	 * 
+	 * @param <V>   the view type
 	 * @param clazz the target class type of the view
 	 */
 	@SuppressWarnings("unchecked")
@@ -204,22 +207,22 @@ public abstract class RsAbstractViewModel<TView extends IRsView> {
 				view = (TView) clazz.getDeclaredConstructor().newInstance();
 				view.setModel(model);
 			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			} catch (NoSuchMethodException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 
