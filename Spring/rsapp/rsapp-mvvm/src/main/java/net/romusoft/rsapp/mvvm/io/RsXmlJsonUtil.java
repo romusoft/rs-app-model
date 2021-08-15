@@ -43,6 +43,8 @@ package net.romusoft.rsapp.mvvm.io;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.sql.Clob;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -56,6 +58,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -423,9 +426,15 @@ public class RsXmlJsonUtil {
 		Document doc = null;
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			InputStream is = xmlClobData.getAsciiStream();
+			InputStream inputStream = xmlClobData.getAsciiStream();
+			Reader reader = new InputStreamReader(inputStream, "UTF-8");
+			//
+			// create the input source
+			InputSource is = new InputSource(reader);
+			is.setEncoding("UTF-8");
 
 			doc = builder.parse(is);
+			doc.getDocumentElement().normalize();
 
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
@@ -434,7 +443,6 @@ public class RsXmlJsonUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

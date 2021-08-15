@@ -44,6 +44,7 @@ public class RsDTORepositoryMapper {
 	public final static String BOOLEAN_T_F_TYPE = "t_f";
 	public final static String BOOLEAN_TRUE_FALSE_TYPE = "true_false";
 	public final static String METADATA_FIELD = "metadata_field";
+	public final static String NESTED_OBJECT_FIELD = "nested_object_field";
 
 	private List<RsDTORepositoryPropertyInfo> propertyInfos = new ArrayList<RsDTORepositoryPropertyInfo>();
 

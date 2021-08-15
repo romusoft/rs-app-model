@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author Emmanuel Romulus
  *
  */
-public abstract class RsAbstractView implements IRsView {
+public abstract class RsAbstractReadOnlyView implements IRsView {
 
 	@JsonIgnore
 	private Model model = null;
@@ -44,7 +44,7 @@ public abstract class RsAbstractView implements IRsView {
 	/**
 	 * default constructor
 	 */
-	public RsAbstractView() {
+	public RsAbstractReadOnlyView() {
 		initialize(null);
 	}
 
@@ -53,7 +53,7 @@ public abstract class RsAbstractView implements IRsView {
 	 * 
 	 * @param model spring mvc model where model attribute can be stored
 	 */
-	public RsAbstractView(Model model) {
+	public RsAbstractReadOnlyView(Model model) {
 		initialize(model);
 	}
 
@@ -104,7 +104,9 @@ public abstract class RsAbstractView implements IRsView {
 	 * 
 	 */
 	@Override
-	public abstract String getMvcRedirectUrl();
+	public String getMvcRedirectUrl() {
+		return "";
+	}
 
 	/**
 	 * 
@@ -140,25 +142,33 @@ public abstract class RsAbstractView implements IRsView {
 	 * 
 	 */
 	@Override
-	public abstract String getUriCreate();
+	public String getUriCreate() {
+		return "";
+	}
 
 	/**
 	 * 
 	 */
 	@Override
-	public abstract String getUriUpdate();
+	public String getUriUpdate() {
+		return "";
+	}
 
 	/**
 	 * 
 	 */
 	@Override
-	public abstract String getUriDelete();
+	public String getUriDelete() {
+		return "";
+	}
 
 	/**
 	 * 
 	 */
 	@Override
-	public abstract String getUriDetail();
+	public String getUriDetail() {
+		return "";
+	}
 
 	/**
 	 * initialize the view with its basic components such as html, css, javaScript

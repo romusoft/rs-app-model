@@ -19,7 +19,7 @@ public abstract class RsAbstractViewModel<TView extends IRsView> {
 
 	@JsonIgnore
 	private final String VIEWMODEL_ATTRIBUTE_NAME = "viewModel";
-	
+
 	@JsonIgnore
 	private Model model = null;
 	private TView view;
@@ -228,5 +228,41 @@ public abstract class RsAbstractViewModel<TView extends IRsView> {
 
 		}
 
+	}
+
+	/**
+	 * format the uri by prepending the api base url in the view if the latter
+	 * exists
+	 * 
+	 * @param uri
+	 * @return
+	 */
+	public String formatApiUri(String uri) {
+
+		if (this.getView() == null || this.getView().getApiBaseUrl() == null
+				|| this.getView().getApiBaseUrl().isEmpty()) {
+			return uri;
+		}
+		//
+		// format the uri with the base from the view
+		return this.getView().getApiBaseUrl() + uri;
+	}
+
+	/**
+	 * format the url by prepending the mvc base url in the view if the latter
+	 * exists
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public String formatMvcUrl(String url) {
+
+		if (this.getView() == null || this.getView().getMvcBaseUrl() == null
+				|| this.getView().getMvcBaseUrl().isEmpty()) {
+			return url;
+		}
+		//
+		// format the uri with the base from the view
+		return this.getView().getMvcBaseUrl() + url;
 	}
 }

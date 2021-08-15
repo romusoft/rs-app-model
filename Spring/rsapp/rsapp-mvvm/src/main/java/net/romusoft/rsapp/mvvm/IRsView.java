@@ -8,6 +8,42 @@ import org.springframework.ui.Model;
  *
  */
 public interface IRsView {
+	public static final String HTML_TITLE_ATTRIBUTE_NAME = "htmlTitle";
+	public static final String PAGE_TITLE_ATTRIBUTE_NAME = "pageTitle";
+	public static final String PAGE_TITLE_DESCRIPTION_ATTRIBUTE_NAME = "pageTitleDescription";
+
+	public static final String API_BASE_URL_ATTRIBUTE_NAME = "apiBaseUrl";
+	public static final String URI_CREATE_ATTRIBUTE_NAME = "uriCreate";
+	public static final String URI_READ_ATTRIBUTE_NAME = "uriRead";
+	public static final String URI_UPDATE_ATTRIBUTE_NAME = "uriUpdate";
+	public static final String URI_DELETE_ATTRIBUTE_NAME = "uriDelete";
+	public static final String URI_DETAIL_ATTRIBUTE_NAME = "uriDetail";
+	public static final String URI_LIST_ATTRIBUTE_NAME = "uriList";
+
+	public static final String START_DATE_ATTRIBUTE_NAME = "startDate";
+	public static final String END_DATE_ATTRIBUTE_NAME = "endDate";
+
+	public static final String HTML_PATH_ATTRIBUTE_NAME = "html";
+	public static final String CSS_PATH_ATTRIBUTE_NAME = "css";
+	public static final String JS_PATH_ATTRIBUTE_NAME = "js";
+
+	public static final String MVC_BASE_URL_ATTRIBUTE_NAME = "mvcBaseUrl";
+	public static final String MVC_REDIRECT_URL_ATTRIBUTE_NAME = "mvcRedirectUrl";
+
+	public static final String MVC_CREATE = "/create";
+	public static final String MVC_READ = "/read";
+	public static final String MVC_UPDATE = "/update";
+	public static final String MVC_DELETE = "/delete";
+	public static final String MVC_DETAIL = "/detail";
+	public static final String MVC_LIST = "/list";
+
+	public static final String API = "api";
+	public static final String API_CREATE = "create";
+	public static final String API_READ = "read";
+	public static final String API_UPDATE = "update";
+	public static final String API_DELETE = "delete";
+	public static final String API_DETAIL = "detail";
+	public static final String API_LIST = "list";
 
 	/************************************************************/
 	/**
@@ -88,11 +124,19 @@ public interface IRsView {
 	public String getUriDetail();
 
 	/**
-	 * a navigation url to navigate to after an operation is performed
+	 * mvc url to navigate to after an operation is performed
 	 * 
-	 * @return the navigation url
+	 * @return the mvc redirect url where to navigate after a post action is
+	 *         performed on the view
 	 */
-	public String getNavigationUrl();
+	public String getMvcRedirectUrl();
+
+	/**
+	 * the base url of the controller where the view end point resides
+	 * 
+	 * @return
+	 */
+	public String getMvcBaseUrl();
 
 	/**
 	 * the static html file path

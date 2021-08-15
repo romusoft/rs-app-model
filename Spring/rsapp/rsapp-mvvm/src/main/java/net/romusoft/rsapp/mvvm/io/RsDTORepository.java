@@ -6,7 +6,7 @@
  *            THIS SOFTWARE OR ANY OTHER COPIES THEREOF MAY NOT BE PROVIDED OR OTHERWISE MADE AVAILABLE TO ANY OTHER PERSON. 
  *            NO TITLE TO AND OWNERSHIP OF THE SOFTWARE IS HEREBY TRANSFERRED.
 * 
- * @DESCRIPTION : Used for supporting a flat dto object objects
+ * @DESCRIPTION : Used for supporting a flat RsDTO object objects
 * 
  * @PROGRAM : application template :  05/01/2021 FUNCTION :
 * 
@@ -51,7 +51,7 @@ import com.fasterxml.jackson.databind.util.StdDateFormat;
 import net.romusoft.rsapp.mvvm.util.RsGeneralUtilities;
 
 /**
- * Used for supporting a flat dto object objects
+ * Used for supporting a flat RsDTO object objects
  * 
  * @author Emmanuel Romulus
  *
@@ -66,20 +66,19 @@ public class RsDTORepository {
 	public final static String BOOLEAN_T_F_TYPE = "t_f";
 	public final static String BOOLEAN_TRUE_FALSE_TYPE = "true_false";
 	public final static String METADATA_FIELD = "metadata_field";
+	public final static String NESTED_OBJECT_FIELD = "nested_object_field";
 
 	// get the entity manager to create queries;
 	@Autowired
 	private EntityManager entityManager;
 
 	/**
-	 * map a class to a navitive query results
 	 * 
-	 * @param <T>             the target data type for return values
-	 * @param nativeSqlString the native sql to execute
-	 * @param propertyInfos   property infos to map columns to properteis
-	 * @param clazz           target data type to return
-	 * @return return a list of object for the target data type
-	 * @throws Exception the thrown exception if any
+	 * @param nativeSqlString
+	 * @param propertyInfos
+	 * @param clazz
+	 * @return
+	 * @throws Exception
 	 */
 	public <T> List<T> getDataObjects(String nativeSqlString, RsDTORepositoryMapper propertyInfos, Class<T> clazz)
 			throws Exception {
@@ -88,15 +87,13 @@ public class RsDTORepository {
 	}
 
 	/**
-	 * map a class to a navitive query results
 	 * 
-	 * @param <T>             the target data type for return values
-	 * @param nativeSqlString the native sql to execute
-	 * @param parameterMap    sql parameters
-	 * @param propertyInfos   property infos to map columns to properteis
-	 * @param clazz           target data type to return
-	 * @return return a list of object for the target data type
-	 * @throws Exception the thrown exception if any
+	 * @param nativeSqlString
+	 * @param parameterMap
+	 * @param propertyInfos
+	 * @param clazz
+	 * @return
+	 * @throws Exception
 	 */
 	public <T> List<T> getDataObjects(String nativeSqlString, Map<String, Object> parameterMap,
 			RsDTORepositoryMapper propertyInfos, Class<T> clazz) throws Exception {
@@ -132,7 +129,6 @@ public class RsDTORepository {
 	 * column of type T is selected. This method has suppressed warnings, so make
 	 * sure that your method is expecting the correct result back.
 	 * 
-	 * @param <T>             the target data type for return values
 	 * @param nativeSqlString sql query, parameters are okay.
 	 * @param parameterMap    parameter mapping, name to value.
 	 * 
@@ -140,7 +136,7 @@ public class RsDTORepository {
 	 *         T for single columns - the data returned is the result of the
 	 *         specified query.
 	 * 
-	 * @throws Exception the thrown exception if any
+	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> List<T> getDataObjects(String nativeSqlString, Map<String, Object> parameterMap) throws Exception {
@@ -169,13 +165,11 @@ public class RsDTORepository {
 	}
 
 	/**
-	 * get json data from a native query
 	 * 
-	 * 
-	 * @param nativeSqlString the native sql to execute
-	 * @param propertyInfos   property infos to map columns to properties
-	 * @return return a list of object for the target data type
-	 * @throws Exception the thrown exception in any
+	 * @param nativeSqlString
+	 * @param propertyInfos
+	 * @return
+	 * @throws Exception
 	 */
 	public String getJsonData(String nativeSqlString, RsDTORepositoryMapper propertyInfos) throws Exception {
 
@@ -183,13 +177,12 @@ public class RsDTORepository {
 	}
 
 	/**
-	 * get json data from a native query
 	 * 
-	 * @param nativeSqlString the native sql to execute
-	 * @param parameterMap    sql parameters
-	 * @param propertyInfos   property infos to map columns to properties
-	 * @return return a list of object for the target data type
-	 * @throws Exception the thrown exception in any
+	 * @param nativeSqlString
+	 * @param parameterMap
+	 * @param propertyInfos
+	 * @return
+	 * @throws Exception
 	 */
 	public String getJsonData(String nativeSqlString, Map<String, Object> parameterMap,
 			RsDTORepositoryMapper propertyInfos) throws Exception {
@@ -227,12 +220,12 @@ public class RsDTORepository {
 	}
 
 	/**
-	 * convert sql results to json
 	 * 
-	 * @param results       json string
-	 * @param propertyInfos property infos to map columns to properties
-	 * @return return a json string
-	 * @throws Exception the thrown exception in any
+	 * @param results
+	 * @param queryColumnNames
+	 * @return
+	 * @throws Exception
+	 * @throws JsonProcessingException
 	 */
 	private String convertSqlResultToJson(List<Object[]> results, RsDTORepositoryMapper propertyInfos)
 			throws Exception {
@@ -252,6 +245,10 @@ public class RsDTORepository {
 			ObjectNode node = mapper.createObjectNode();
 			ObjectNode metadataNode = mapper.createObjectNode();
 			node.set("metadata", metadataNode); // metadata is ready for this record
+
+			//
+			// nested or complex object
+			ObjectNode nestedObjectNode = mapper.createObjectNode();
 
 			for (int i = 0; i < propertyInfos.size(); i++) {
 
@@ -284,6 +281,8 @@ public class RsDTORepository {
 					case RsDTORepository.ARRAY_TYPE:
 						break;
 					case RsDTORepository.METADATA_FIELD:
+						break;
+					case RsDTORepository.NESTED_OBJECT_FIELD:
 						break;
 
 					default:
@@ -324,9 +323,27 @@ public class RsDTORepository {
 						metadataNode.put(info.getPropertyName(), value);
 					}
 
-				} else if (value != null)
+				} else if (info.getPropertyType() == RsDTORepository.NESTED_OBJECT_FIELD) {
 
+					if (value == null) {
+						value = "[]";
+					}
+					//
+					// First try to use the value as json. If not a valid json, use the value as is
+					ObjectMapper tempmapper = new ObjectMapper();
+					try {
+
+						JsonNode nestedObjectValueNode = tempmapper.readTree(value);
+						nestedObjectNode.set(info.getPropertyName(), nestedObjectValueNode);
+					} catch (JsonProcessingException e) {
+						//
+						// not a valid json. Use the value as a scalar value
+						nestedObjectNode.put(info.getPropertyName(), value);
+					}
+
+				} else if (value != null) {
 					node.put(info.getPropertyName(), value);
+				}
 			}
 
 			jsonArray.add(node);
@@ -345,12 +362,12 @@ public class RsDTORepository {
 	}
 
 	/**
-	 * Convert a single column result to json
 	 * 
-	 * @param results       json string
-	 * @param propertyInfos property infos to map columns to properties
-	 * @return return a json string
-	 * @throws Exception exception to be thrown if any
+	 * @param results
+	 * @param queryColumnNames
+	 * @return
+	 * @throws Exception
+	 * @throws JsonProcessingException
 	 */
 	private String convertSingleColumnSqlResultToJson(List<Object> results, RsDTORepositoryMapper propertyInfos)
 			throws Exception {
@@ -359,7 +376,7 @@ public class RsDTORepository {
 		ArrayNode jsonArray = mapper.createArrayNode();
 
 		if (+propertyInfos.size() != 1) {
-			throw new Exception("DTORepositoryMapper must contain a single value");
+			throw new Exception("RsDTORepositoryMapper must contain a single value");
 		}
 
 		RsDTORepositoryPropertyInfo info = propertyInfos.get(0);
@@ -419,12 +436,9 @@ public class RsDTORepository {
 	/**
 	 * Mapped json objects to pojos using the target class
 	 * 
-	 * 
-	 * @param <T>      the data type to return
-	 * @param jsonData json string to convert to the target data type
-	 * @param clazz    target data type to return
-	 * @return return a list of object for the target data type
-	 * 
+	 * @param jsonData
+	 * @author romulus
+	 * @return
 	 */
 	public static <T> List<T> convertJsonToPOJO(String jsonData, Class<T> clazz) {
 		//
@@ -483,10 +497,10 @@ public class RsDTORepository {
 	/**
 	 * Get an expecting one record from the json string
 	 * 
-	 * @param <T>      the data type to return
-	 * @param jsonData json string to convert to the target data type
-	 * @param clazz    target data type to return
-	 * @return return a list of object for the target data type
+	 * @param <T>
+	 * @param jsonData
+	 * @param clazz
+	 * @return
 	 */
 	public static <T> T convertJsonToSinglePOJO(String jsonData, Class<T> clazz) {
 

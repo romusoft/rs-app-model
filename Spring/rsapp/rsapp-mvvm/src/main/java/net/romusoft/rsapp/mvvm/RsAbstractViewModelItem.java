@@ -2,8 +2,6 @@ package net.romusoft.rsapp.mvvm;
 
 import java.util.UUID;
 
-import net.romusoft.rsapp.mvvm.model.RsViewModelItemOption;
-
 /**
  * business object or item in a view model
  * 
