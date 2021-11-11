@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.util.StdDateFormat;
  * @author Emmanuel Romulus
  *
  */
-public class RsViewModelItem extends RsAbstractViewModelItem {
+public class RsViewModelItem extends RsViewModelItemBase {
 
 	private String emailAddress;
 	private String comment;

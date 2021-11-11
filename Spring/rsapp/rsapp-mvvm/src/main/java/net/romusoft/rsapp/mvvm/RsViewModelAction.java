@@ -6,7 +6,7 @@ package net.romusoft.rsapp.mvvm;
  * @author Emmanuel Romulus
  *
  */
-public class RsViewModelAction extends RsAbstractViewModelItem {
+public class RsViewModelAction extends RsViewModelItemBase {
 	private String name = "";
 	private String url = "";
 	private String message = "";

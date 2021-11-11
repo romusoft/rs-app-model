@@ -1,49 +1,60 @@
 package net.romusoft.rsapp.mvvm;
 
+import java.util.HashMap;
+
 import org.springframework.ui.Model;
 
 /**
+ * the view definition
  * 
  * @author Emmanuel Romulus
  *
  */
 public interface IRsView {
+	/**
+	 * attribute name for htmlTitle
+	 */
 	public static final String HTML_TITLE_ATTRIBUTE_NAME = "htmlTitle";
+	/**
+	 * attribute name for pageTitle
+	 */
 	public static final String PAGE_TITLE_ATTRIBUTE_NAME = "pageTitle";
+	/**
+	 * attribute name for pageTitleDescription
+	 */
 	public static final String PAGE_TITLE_DESCRIPTION_ATTRIBUTE_NAME = "pageTitleDescription";
 
+	/**
+	 * attribute name for apiBaseUrl
+	 */
 	public static final String API_BASE_URL_ATTRIBUTE_NAME = "apiBaseUrl";
-	public static final String URI_CREATE_ATTRIBUTE_NAME = "uriCreate";
-	public static final String URI_READ_ATTRIBUTE_NAME = "uriRead";
-	public static final String URI_UPDATE_ATTRIBUTE_NAME = "uriUpdate";
-	public static final String URI_DELETE_ATTRIBUTE_NAME = "uriDelete";
-	public static final String URI_DETAIL_ATTRIBUTE_NAME = "uriDetail";
-	public static final String URI_LIST_ATTRIBUTE_NAME = "uriList";
 
-	public static final String START_DATE_ATTRIBUTE_NAME = "startDate";
-	public static final String END_DATE_ATTRIBUTE_NAME = "endDate";
-
+	/**
+	 * attribute name for html
+	 */
 	public static final String HTML_PATH_ATTRIBUTE_NAME = "html";
+	/**
+	 * attribute name for css
+	 */
 	public static final String CSS_PATH_ATTRIBUTE_NAME = "css";
+	/**
+	 * attribute name for js
+	 */
 	public static final String JS_PATH_ATTRIBUTE_NAME = "js";
 
+	/**
+	 * attribute name for mvcBaseUrl
+	 */
 	public static final String MVC_BASE_URL_ATTRIBUTE_NAME = "mvcBaseUrl";
-	public static final String MVC_REDIRECT_URL_ATTRIBUTE_NAME = "mvcRedirectUrl";
 
-	public static final String MVC_CREATE = "/create";
-	public static final String MVC_READ = "/read";
-	public static final String MVC_UPDATE = "/update";
-	public static final String MVC_DELETE = "/delete";
-	public static final String MVC_DETAIL = "/detail";
-	public static final String MVC_LIST = "/list";
-
-	public static final String API = "api";
-	public static final String API_CREATE = "create";
-	public static final String API_READ = "read";
-	public static final String API_UPDATE = "update";
-	public static final String API_DELETE = "delete";
-	public static final String API_DETAIL = "detail";
-	public static final String API_LIST = "list";
+	/**
+	 * attribute name for startDate
+	 */
+	public static final String START_DATE_ATTRIBUTE_NAME = "startDate";
+	/**
+	 * attribute name for endDate
+	 */
+	public static final String END_DATE_ATTRIBUTE_NAME = "endDate";
 
 	/************************************************************/
 	/**
@@ -93,48 +104,40 @@ public interface IRsView {
 	 * 
 	 * @return the uri that reads data for the page
 	 */
-	public String getUriRead();
+	public RsViewModelUri getUriRead();
 
 	/**
 	 * uri to read/create data using get and post requests
 	 * 
 	 * @return the create uri
 	 */
-	public String getUriCreate();
+	public RsViewModelUri getUriCreate();
 
 	/**
 	 * uri to read/update data using get and post requests
 	 * 
 	 * @return update uri
 	 */
-	public String getUriUpdate();
+	public RsViewModelUri getUriUpdate();
 
 	/**
 	 * uri to read/delete data using get and post requests
 	 * 
 	 * @return the read ui
 	 */
-	public String getUriDelete();
+	public RsViewModelUri getUriDelete();
 
 	/**
 	 * uri to read data for a single record
 	 * 
 	 * @return uri to read data for a single record
 	 */
-	public String getUriDetail();
-
-	/**
-	 * mvc url to navigate to after an operation is performed
-	 * 
-	 * @return the mvc redirect url where to navigate after a post action is
-	 *         performed on the view
-	 */
-	public String getMvcRedirectUrl();
+	public RsViewModelUri getUriDetail();
 
 	/**
 	 * the base url of the controller where the view end point resides
 	 * 
-	 * @return
+	 * @return mvc base url
 	 */
 	public String getMvcBaseUrl();
 
@@ -159,4 +162,128 @@ public interface IRsView {
 	 */
 	public String getJs();
 
+	/**
+	 * any uri need for the view. A view may have many navigation
+	 * 
+	 * @return hashmap of uris
+	 */
+	public HashMap<String, RsViewModelUri> getUris();
+
+	/**
+	 * the path to the html file
+	 * 
+	 * @param html the path to the html file
+	 */
+	public void setHtml(String html);
+
+	/**
+	 * the path to the css file
+	 * 
+	 * @param css the path to the css file
+	 */
+	public void setCss(String css);
+
+	/**
+	 * the path to the js file
+	 * 
+	 * @param js the path to the js file
+	 */
+	public void setJs(String js);
+
+	/**
+	 * the html title
+	 * 
+	 * @param htmlTitle the html document title
+	 */
+	public void setHtmlTitle(String htmlTitle);
+
+	/**
+	 * the page title
+	 * 
+	 * @param pageTitle the page title
+	 */
+	public void setPageTitle(String pageTitle);
+
+	/**
+	 * description for the page title
+	 * 
+	 * @param pageTitleDescription description for the page title
+	 */
+	public void setPageTitleDescription(String pageTitleDescription);
+
+	/**
+	 * the mvc base url
+	 * 
+	 * @param mvcBaseUrl the mvc base url
+	 */
+	public void setMvcBaseUrl(String mvcBaseUrl);
+
+	/**
+	 * the api base url
+	 * 
+	 * @param apiBaseUrl the api context base url
+	 */
+	public void setApiBaseUrl(String apiBaseUrl);
+
+	/**
+	 * the read uri for the api where the view gets data
+	 * 
+	 * @param uriRead the read uri
+	 */
+	public void setUriRead(RsViewModelUri uriRead);
+
+	/**
+	 * the create uri to persist data
+	 * 
+	 * @param uriCreate create uri
+	 */
+	public void setUriCreate(RsViewModelUri uriCreate);
+
+	/**
+	 * the update uri
+	 * 
+	 * @param uriUpdate update uri
+	 */
+	public void setUriUpdate(RsViewModelUri uriUpdate);
+
+	/**
+	 * the delete uri
+	 * 
+	 * @param uriDelete delete uri
+	 */
+	public void setUriDelete(RsViewModelUri uriDelete);
+
+	/**
+	 * the detail uri
+	 * 
+	 * @param uriDetail detail uri
+	 */
+	public void setUriDetail(RsViewModelUri uriDetail);
+
+	/**
+	 * initialize default values in the view such uri values
+	 */
+	public void init();
+
+	/**
+	 * update the model attributes
+	 */
+	public void updateModelAttributes();
+
+	/**
+	 * add any rest uri to the view since the view may navigate to various places
+	 * 
+	 * @param name the name of the uri
+	 * @param uri  the uri object
+	 * @return return the instance of the uri for chaining
+	 */
+	public RsViewModelUri addUri(String name, RsViewModelUri uri);
+
+	/**
+	 * retrieve an existing uri from the view
+	 * 
+	 * @param name the name of the uri to find
+	 * @return the existing instance or null
+	 */
+	public RsViewModelUri findUri(String name);
 }

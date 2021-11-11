@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import net.romusoft.rsapp.autoconfigure.properties.RsAssemblyInfoProperties;
 import net.romusoft.rsapp.autoconfigure.properties.RsCdnCssProperties;
 import net.romusoft.rsapp.autoconfigure.properties.RsCdnJsProperties;
-import net.romusoft.rsapp.mvvm.model.RsAssemblyInfo;
-import net.romusoft.rsapp.mvvm.model.RsCDNViewModel;
+import net.romusoft.rsapp.model.RsAssemblyInfo;
+import net.romusoft.rsapp.viewmodel.RsCDNViewModel;
 
 /**
  * Configure beans based on resource properties {RsCdnJsProperties,
